@@ -345,13 +345,13 @@
       answered = false;
       renderQuestion();
     });
-    $('#quizReview').addEventListener('click', () => goTo(16));
+    $('#quizReview').addEventListener('click', () => window.IT7.goToKey('recap'));
   }
 
   renderQuestion();
 
   document.addEventListener('keydown', (event) => {
-    if (window.IT7.current !== 15) return;
+    if (window.IT7.currentKey !== 'quiz') return;
     if (document.body.classList.contains('editing')) return;
     if (event.target.matches && event.target.matches('input, textarea, select')) return;
     if (event.key >= '1' && event.key <= '4' && !answered) {

@@ -57,6 +57,7 @@ function confetti(count = 70) {
 const progressFill = $('#progressFill');
 const progressLabel = $('#progressLabel');
 const navCounter = $('#navCounter');
+const unitLabel = $('#unitLabel');
 const prevBtn = $('#prevBtn');
 const nextBtn = $('#nextBtn');
 const navDots = $('#navDots');
@@ -96,6 +97,7 @@ function goTo(index, options = {}) {
   if (progressFill) progressFill.style.width = pct + '%';
   if (progressLabel) progressLabel.textContent = (index + 1) + ' / ' + total;
   if (navCounter) navCounter.textContent = (index + 1) + ' / ' + total;
+  if (unitLabel) unitLabel.textContent = slides[index].dataset.unit || 'الصف السابع';
   dotEls.forEach((dot, i) => dot.classList.toggle('is-on', i === index));
   outlineButtons.forEach((btn, i) => btn.classList.toggle('is-on', i === index));
   if (prevBtn) prevBtn.disabled = index === 0;
@@ -104,17 +106,22 @@ function goTo(index, options = {}) {
   document.dispatchEvent(new CustomEvent('it7:slide', { detail: { index } }));
 }
 
+function goToKey(key) {
+  const index = slides.findIndex((slide) => slide.dataset.key === key);
+  if (index >= 0) goTo(index);
+  return index;
+}
+
 prevBtn.addEventListener('click', () => goTo(current - 1));
 nextBtn.addEventListener('click', () => goTo(current + 1));
 
 document.addEventListener('click', (event) => {
   const trigger = event.target.closest('[data-goto]');
   if (!trigger) return;
-  const index = parseInt(trigger.dataset.goto, 10);
-  if (!Number.isNaN(index)) {
-    event.preventDefault();
-    goTo(index);
-  }
+  const target = trigger.dataset.goto;
+  event.preventDefault();
+  if (/^\d+$/.test(target)) goTo(parseInt(target, 10));
+  else goToKey(target);
 });
 
 function toggleFullscreen() {
@@ -606,7 +613,9 @@ window.IT7 = {
   toast,
   confetti,
   goTo,
+  goToKey,
   get current() { return current; },
+  get currentKey() { return slides[current] ? slides[current].dataset.key : ''; },
   get xp() { return xp; },
   total
 };

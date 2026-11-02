@@ -350,9 +350,13 @@
     return number.toString(2).padStart(4, '0');
   }
 
-  convTableBody.innerHTML = Array.from({ length: 17 }, (_, number) => {
-    const binary = toBinary(number);
-    return '<tr><td class="dec-cell">' + number + '</td><td class="bin-cell" data-binary="' + binary + '">' + binary + '</td></tr>';
+  convTableBody.innerHTML = Array.from({ length: 9 }, (_, number) => {
+    const second = number + 9;
+    const left = '<td class="dec-cell">' + number + '</td><td class="bin-cell" data-binary="' + toBinary(number) + '">' + toBinary(number) + '</td>';
+    const right = second <= 16
+      ? '<td class="dec-cell">' + second + '</td><td class="bin-cell" data-binary="' + toBinary(second) + '">' + toBinary(second) + '</td>'
+      : '<td class="dec-cell empty">—</td><td class="bin-cell empty">—</td>';
+    return '<tr>' + left + right + '</tr>';
   }).join('');
 
   tableToggle.addEventListener('click', () => {
