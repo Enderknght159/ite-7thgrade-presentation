@@ -1,0 +1,1011 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تكنولوجيا المعلومات والاتصالات — الصف السابع</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles-slides.css">
+<link rel="stylesheet" href="styles-extra.css">
+<link rel="stylesheet" href="styles-fixes.css">
+<link rel="stylesheet" href="styles-redesign.css?v=10">
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true">
+  <defs>
+    <linearGradient id="g-robot" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#89e219"/>
+      <stop offset="1" stop-color="#58cc02"/>
+    </linearGradient>
+  </defs>
+  <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="10" rx="2"/><path d="M2 19h20M9 19l.5-2h5l.5 2"/></symbol>
+  <symbol id="i-desktop" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="7" rx="2"/><rect x="4" y="14" width="16" height="7" rx="2"/><path d="M8 6.5h.01M8 17.5h.01M12 6.5h5M12 17.5h5"/></symbol>
+  <symbol id="i-super" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/><circle cx="17" cy="16" r="1"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></symbol>
+  <symbol id="i-ram" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="9" rx="2"/><path d="M7 7v9M11 7v9M15 7v9M19 7v9M6 16v3M18 16v3"/></symbol>
+  <symbol id="i-rom" viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="12" rx="2"/><path d="M9 10h6M9 14h4"/></symbol>
+  <symbol id="i-disk" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="3"/><circle cx="17" cy="12" r="1.5"/><path d="M7 12h6"/></symbol>
+  <symbol id="i-gpu" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="2"/><circle cx="9" cy="12" r="3"/><path d="M15 10h3M15 14h3M6 17v3"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6L8 10H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></symbol>
+  <symbol id="i-network" viewBox="0 0 24 24"><path d="M3 9a15 15 0 0 1 18 0M6.5 12.5a10 10 0 0 1 11 0M10 16a4 4 0 0 1 4 0"/><circle cx="12" cy="19" r="1"/></symbol>
+  <symbol id="i-fan" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 12c2-3 5-3 5-1s-3 4-5 1zM12 12c-2 3-5 3-5 1s3-4 5-1zM12 12c-1 3 0 6 2 5s1-5-2-5z"/></symbol>
+  <symbol id="i-io" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="11" rx="2"/><path d="M7 10h.01M10 10h.01M13 10h.01M16 10h.01M7 13h.01M10 13h.01M13 13h.01M16 13h.01M8 17v3M16 17v3"/></symbol>
+  <symbol id="i-board" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><rect x="7" y="7" width="4" height="4" rx="1"/><rect x="14" y="13" width="3" height="4" rx="1"/><path d="M11 9h3v4M7 14h4v3M13 9V7h4"/></symbol>
+  <symbol id="i-virus" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/><circle cx="10" cy="10" r="1"/><circle cx="14" cy="14" r="1"/></symbol>
+  <symbol id="i-worm" viewBox="0 0 24 24"><path d="M5 18c0-3 3-4 6-4s5-1 5-4-2-4-5-4"/><circle cx="5" cy="18" r="2"/><path d="M15 6h.01M17 8h.01M19 10h.01"/></symbol>
+  <symbol id="i-trojan" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M3 10h18M12 10v10M12 10c-2 0-5-1-5-3s3-2 5 3c2-5 5-3 5-1s-3 1-5 1"/></symbol>
+  <symbol id="i-spy" viewBox="0 0 24 24"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-ad" viewBox="0 0 24 24"><path d="M4 10v4h4l7 4V6L8 10H4z"/><path d="M17 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12"/></symbol>
+  <symbol id="i-ransom" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-firewall" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 4v5M15 9v5M9 14v6M15 4v5"/></symbol>
+  <symbol id="i-backup" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13.7-5.7L20 8"/><path d="M20 4v4h-4M20 12a8 8 0 0 1-13.7 5.7L4 16"/><path d="M4 20v-4h4"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6-5.4-2.8-5.4 2.8 1-6-4.4-4.3 6.1-.9L12 3z"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M8 14a6 6 0 1 1 8 0c-1 1-1.5 2-1.5 3h-5c0-1-.5-2-1.5-3z"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></symbol>
+  <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 3L2 21h20L12 3z"/><path d="M12 9v5M12 17h.01"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
+  <symbol id="i-usb" viewBox="0 0 24 24"><rect x="8" y="3" width="8" height="6" rx="1"/><path d="M12 9v6"/><rect x="6" y="15" width="12" height="6" rx="2"/></symbol>
+  <symbol id="i-mask" viewBox="0 0 24 24"><path d="M4 5c5 2 11 2 16 0v6c0 4-3.5 7-8 9-4.5-2-8-5-8-9V5z"/><path d="M8 10h.01M16 10h.01M9 14c2 1.5 4 1.5 6 0"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5l11 7-11 7V5z"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13 7l4 4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 21V9M7 14l5-5 5 5M4 3h16"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a3 3 0 0 1 3-2h13v18H7a3 3 0 0 0-3 2V5z"/><path d="M4 19a3 3 0 0 1 3-2h13"/></symbol>
+  <symbol id="robot" viewBox="0 0 220 240">
+    <ellipse cx="110" cy="226" rx="58" ry="9" fill="#000" opacity=".08"/>
+    <path d="M110 28V16" stroke="#7aa7b5" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="110" cy="12" r="8" fill="#ffc800"/>
+    <rect x="44" y="30" width="132" height="104" rx="42" fill="#f2fbff" stroke="#bde6f7" stroke-width="4"/>
+    <rect x="62" y="50" width="96" height="64" rx="26" fill="#263942"/>
+    <circle cx="92" cy="78" r="7" fill="#89e219"/>
+    <circle cx="128" cy="78" r="7" fill="#89e219"/>
+    <path d="M98 94c8 6 16 6 24 0" stroke="#89e219" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <circle cx="44" cy="82" r="10" fill="#58cc02"/>
+    <circle cx="176" cy="82" r="10" fill="#58cc02"/>
+    <rect x="62" y="146" width="96" height="62" rx="26" fill="url(#g-robot)"/>
+    <rect x="82" y="160" width="56" height="26" rx="10" fill="#d7ffb8"/>
+    <path d="M88 173h8M104 173h6M116 173h8" stroke="#46a302" stroke-width="4" stroke-linecap="round"/>
+    <path d="M62 160c-10 2-18 10-18 22M158 160c10 2 18 10 18 22" stroke="#58cc02" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <circle cx="42" cy="186" r="8" fill="#58cc02"/>
+    <circle cx="178" cy="186" r="8" fill="#58cc02"/>
+  </symbol>
+</svg>
+
+<div class="bg-decor" aria-hidden="true">
+  <span class="blob b1"></span>
+  <span class="blob b2"></span>
+  <span class="blob b3"></span>
+  <span class="dots"></span>
+</div>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark"><svg class="ico"><use href="#i-desktop"/></svg></div>
+    <div class="brand-text">
+      <strong>تكنولوجيا المعلومات</strong>
+      <span id="unitLabel">مقدمة</span>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div><span class="progress-star"><svg class="ico"><use href="#i-star"/></svg></span></div>
+    <span class="progress-label" id="progressLabel">1 / 21</span>
+  </div>
+  <div class="top-actions">
+    <div class="xp-pill" title="نقاط الخبرة"><svg class="ico"><use href="#i-spark"/></svg><span id="xpValue">0</span><small>XP</small></div>
+    <button class="icon-btn" id="editorBtn" aria-label="لوحة التحرير" title="لوحة التحرير"><svg class="ico"><use href="#i-edit"/></svg></button>
+    <button class="icon-btn" id="fullscreenBtn" aria-label="ملء الشاشة" title="ملء الشاشة"><svg class="ico"><use href="#i-expand"/></svg></button>
+  </div>
+</header>
+
+<main class="deck" id="deck">
+
+  <section class="slide slide-cover" data-title="البداية" data-key="cover" data-unit="مقدمة">
+    <div class="slide-inner cover-grid">
+      <div class="cover-copy">
+        <h1 class="reveal" style="--i:0" data-edit="cover.title">تكنولوجيا المعلومات<br><span class="hl">والاتصالات</span></h1>
+        <p class="lead reveal" style="--i:1" data-edit="cover.sub">ثلاث وحدات: مكوّنات الحاسوب، لغة الآلة، والحماية الرقمية. مع عشرة تجارب تفاعلية واختبار قصير في نهاية الرحلة.</p>
+        <div class="unit-chips reveal" style="--i:2">
+          <span>3 وحدات</span>
+          <span>10 تجارب تفاعلية</span>
+          <span>اختبار من 10 أسئلة</span>
+        </div>
+        <div class="cover-actions reveal" style="--i:3">
+          <button class="btn btn-primary btn-lg" data-goto="types">هيا نبدأ <svg class="ico"><use href="#i-arrow-left"/></svg></button>
+          <button class="btn btn-ghost btn-lg" data-goto="roadmap">خريطة الرحلة</button>
+        </div>
+        <p class="hint reveal" style="--i:4"><kbd>←</kbd> <kbd>→</kbd> للتنقل • <kbd>F</kbd> لملء الشاشة</p>
+      </div>
+      <div class="cover-art reveal" style="--i:1">
+        <div class="monitor3d">
+          <div class="screen3d">
+            <div class="screen-body">
+              <span class="screen-kicker">كل حرف… سلسلة من البتات</span>
+              <div class="screen-big">01001000<span>H</span></div>
+              <div class="screen-big">01101001<span>i</span></div>
+              <span class="screen-caption">ثمانية بتات تصنع بايتًا واحدًا</span>
+            </div>
+          </div>
+          <div class="monitor-neck"></div>
+          <div class="monitor-foot"></div>
+        </div>
+        <div class="cover-spec" aria-label="مسار البيانات في الحاسوب">
+          <span>مدخلات</span><b>←</b><span>معالجة</span><b>←</b><span>مخرجات</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-roadmap" data-title="خريطة الرحلة" data-key="roadmap" data-unit="مقدمة">
+    <div class="slide-inner">
+      <header class="slide-head">
+        <h2 class="reveal" style="--i:0" data-edit="road.title">ثلاث وحدات… ومغامرة واحدة</h2>
+        <p class="reveal" style="--i:1" data-edit="road.sub">اضغط على أي محطة لتبدأ منها. كل محطة مليئة بالتجارب والتحديات.</p>
+      </header>
+      <div class="roadmap">
+        <button class="road-stop reveal" style="--i:2;--c:#146c47" data-goto="types">
+          <span class="road-num">1</span>
+          <span class="road-icon"><svg class="ico"><use href="#i-desktop"/></svg></span>
+          <strong>الوحدة الأولى</strong>
+          <h3>تعريف عام بالحاسوب</h3>
+          <p>أنواع الحواسيب، المكوّنات، والذاكرة.</p>
+          <span class="road-go">ابدأ <svg class="ico"><use href="#i-arrow-left"/></svg></span>
+        </button>
+        <button class="road-stop reveal" style="--i:3;--c:#1f5f86" data-goto="decimal">
+          <span class="road-num">2</span>
+          <span class="road-icon"><svg class="ico"><use href="#i-cpu"/></svg></span>
+          <strong>الوحدة الثانية</strong>
+          <h3>أنظمة العدّ والتحويل</h3>
+          <p>العشري، الثنائي، والتحويل بينهما.</p>
+          <span class="road-go">ابدأ <svg class="ico"><use href="#i-arrow-left"/></svg></span>
+        </button>
+        <button class="road-stop reveal" style="--i:4;--c:#6c4769" data-goto="malware-1">
+          <span class="road-num">3</span>
+          <span class="road-icon"><svg class="ico"><use href="#i-shield"/></svg></span>
+          <strong>الوحدة الثالثة</strong>
+          <h3>البرامج الضارة والحماية</h3>
+          <p>الأنواع، طرق الانتقال، ووسائل الحماية.</p>
+          <span class="road-go">ابدأ <svg class="ico"><use href="#i-arrow-left"/></svg></span>
+        </button>
+      </div>
+      <div class="road-stats reveal" style="--i:5">
+        <span><b>3</b> وحدات</span>
+        <span><b>10+</b> تجارب تفاعلية</span>
+        <span><b>10</b> أسئلة اختبار</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-types" data-title="أنواع الحواسيب" data-key="types" data-unit="الوحدة الأولى">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0" data-edit="types.title">ليس كل حاسوب… يشبه الآخر</h2>
+        <p class="reveal" style="--i:1" data-edit="types.sub">اختر نوعًا لتكتشف وظيفته. ثم انتقل إلى شريحة المهمة لتطبّق ما تعلّمته على موقف من الحياة.</p>
+      </header>
+      <div class="types-layout">
+        <div class="type-cards reveal" style="--i:2">
+          <button class="type-card tilt is-active" data-type="laptop" style="--c:#146c47">
+            <span class="type-icon"><svg class="ico"><use href="#i-laptop"/></svg></span>
+            <strong>الحاسوب المحمول</strong>
+            <small>Laptop</small>
+            <span class="type-badge">متنقّل</span>
+          </button>
+          <button class="type-card tilt" data-type="desktop" style="--c:#1f5f86">
+            <span class="type-icon"><svg class="ico"><use href="#i-desktop"/></svg></span>
+            <strong>الحاسوب الثابت</strong>
+            <small>Desktop</small>
+            <span class="type-badge">منزلي / مكتبي</span>
+          </button>
+          <button class="type-card tilt" data-type="server" style="--c:#6c4769">
+            <span class="type-icon"><svg class="ico"><use href="#i-server"/></svg></span>
+            <strong>الحاسوب الخادم</strong>
+            <small>Server</small>
+            <span class="type-badge">يخدم الجميع</span>
+          </button>
+          <button class="type-card tilt" data-type="super" style="--c:#966300">
+            <span class="type-icon"><svg class="ico"><use href="#i-super"/></svg></span>
+            <strong>الحواسب الضخمة</strong>
+            <small>Super Computers</small>
+            <span class="type-badge">قوة خارقة</span>
+          </button>
+        </div>
+        <aside class="type-detail card reveal" style="--i:3">
+          <div class="type-detail-icon" id="typeDetailIcon"><svg class="ico"><use href="#i-laptop"/></svg></div>
+          <span class="type-en" id="typeEn">Laptop</span>
+          <h3 id="typeName">الحاسوب المحمول</h3>
+          <p id="typeDesc">حاسوب صغير الحجم يمكن حمله بسهولة، وتكون الشاشة ولوحة المفاتيح مدمجتين فيه.</p>
+          <ul class="check-list" id="typePoints"></ul>
+          <div class="type-use" id="typeUse"><svg class="ico"><use href="#i-bulb"/></svg><span>مناسب للطلاب والتنقل بين المنزل والمدرسة.</span></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-mission" data-title="مهمة سريعة" data-key="mission" data-unit="الوحدة الأولى">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0">أي حاسوب يناسب الموقف؟</h2>
+        <p class="reveal" style="--i:1">اقرأ الموقف جيدًا، ثم اختر نوع الحاسوب المناسب. ستظهر الإجابة الصحيحة مع سبب واضح.</p>
+      </header>
+      <div class="mission-card mission-hero reveal" style="--i:2">
+        <div class="mission-copy">
+          <span class="chip">مهمة سريعة</span>
+          <h3 data-edit="types.mission.title">الموقف</h3>
+          <p id="missionText">تحتاج شركة إلى جهاز واحد يخدم موظفيها العشرين في الوقت نفسه، ويحفظ الملفات المشتركة بينهم.</p>
+        </div>
+        <div class="mission-side">
+          <div class="mission-choices" id="missionChoices"></div>
+          <div class="feedback" id="missionFeedback" aria-live="polite"></div>
+          <button class="btn btn-ghost" id="missionNext">سيناريو آخر <svg class="ico"><use href="#i-arrow-left"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-components" data-title="مكونات الحاسوب" data-key="components" data-unit="الوحدة الأولى">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0" data-edit="comp.title">افتح صندوق الحاسوب… واستكشف</h2>
+        <p class="reveal" style="--i:1" data-edit="comp.sub">اضغط على أي قطعة داخل اللوحة الأم لتعرف وظيفتها. جرّب «وضع التحدي» في النهاية.</p>
+      </header>
+      <div class="comp-layout">
+        <div class="board-wrap reveal" style="--i:3">
+          <div class="motherboard" id="motherboard">
+            <svg class="board-traces" viewBox="0 0 100 62" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M22 16h20v10h30V16h18M13 36h18v10h32v8h20M32 46V36M65 12v10M83 20v14M50 29v-7M50 47v10"/>
+              <path d="M6 22h10M90 42h6M6 52h18M72 54h20" opacity=".55"/>
+              <circle cx="22" cy="16" r="1.2"/><circle cx="65" cy="12" r="1.2"/><circle cx="83" cy="20" r="1.2"/><circle cx="13" cy="36" r="1.2"/><circle cx="63" cy="54" r="1.2"/>
+            </svg>
+            <button class="hotspot" data-comp="cpu" style="left:22%;top:26%"><span class="hs-ico"><svg class="ico"><use href="#i-cpu"/></svg></span><span class="hs-label">المعالج</span></button>
+            <button class="hotspot" data-comp="fan" style="left:40%;top:19%"><span class="hs-ico"><svg class="ico"><use href="#i-fan"/></svg></span><span class="hs-label">المروحة</span></button>
+            <button class="hotspot" data-comp="ram" style="left:65%;top:19%"><span class="hs-ico"><svg class="ico"><use href="#i-ram"/></svg></span><span class="hs-label">RAM</span></button>
+            <button class="hotspot" data-comp="rom" style="left:84%;top:33%"><span class="hs-ico"><svg class="ico"><use href="#i-rom"/></svg></span><span class="hs-label">ROM</span></button>
+            <button class="hotspot" data-comp="gpu" style="left:13%;top:57%"><span class="hs-ico"><svg class="ico"><use href="#i-gpu"/></svg></span><span class="hs-label">بطاقة الشاشة</span></button>
+            <button class="hotspot" data-comp="hdd" style="left:32%;top:74%"><span class="hs-ico"><svg class="ico"><use href="#i-disk"/></svg></span><span class="hs-label">القرص الصلب</span></button>
+            <button class="hotspot" data-comp="sound" style="left:64%;top:74%"><span class="hs-ico"><svg class="ico"><use href="#i-sound"/></svg></span><span class="hs-label">بطاقة الصوت</span></button>
+            <button class="hotspot" data-comp="network" style="left:87%;top:57%"><span class="hs-ico"><svg class="ico"><use href="#i-network"/></svg></span><span class="hs-label">بطاقة الشبكة</span></button>
+            <button class="hotspot" data-comp="io" style="left:50%;top:90%"><span class="hs-ico"><svg class="ico"><use href="#i-io"/></svg></span><span class="hs-label">الإدخال / الإخراج</span></button>
+            <button class="hotspot hs-board" data-comp="motherboard" style="left:50%;top:46%"><span class="hs-ico"><svg class="ico"><use href="#i-board"/></svg></span><span class="hs-label">اللوحة الأم</span></button>
+          </div>
+          <p class="board-hint"><svg class="ico"><use href="#i-bulb"/></svg> كل القطع تتصل باللوحة الأم… وهي التي تربط بينها.</p>
+        </div>
+        <aside class="comp-detail card reveal" style="--i:4">
+          <div class="comp-head">
+            <span class="comp-icon" id="compIcon"><svg class="ico"><use href="#i-cpu"/></svg></span>
+            <div><span class="comp-en" id="compEn">CPU</span><h3 id="compName">المعالج</h3></div>
+          </div>
+          <p class="comp-desc" id="compDesc">عقل الحاسوب الذي ينفّذ الأوامر.</p>
+          <ul class="check-list" id="compPoints"></ul>
+          <div class="comp-watermark" aria-hidden="true"><svg class="ico"><use href="#i-board"/></svg></div>
+          <div class="challenge-box">
+            <button class="btn btn-blue btn-sm" id="challengeBtn"><svg class="ico"><use href="#i-target"/></svg> وضع التحدي</button>
+            <div class="challenge-panel" id="challengePanel" hidden>
+              <span class="challenge-progress" id="challengeProgress">1 / 5</span>
+              <p id="challengePrompt">أين تُنفَّذ العمليات الحسابية والمنطقية؟</p>
+              <div class="feedback" id="challengeFeedback" aria-live="polite"></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-memory" data-title="لعبة الذاكرة" data-key="memory" data-unit="الوحدة الأولى">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0" data-edit="mem.title">إلى أي ذاكرة تنتمي؟</h2>
+        <p class="reveal" style="--i:1" data-edit="mem.sub">اختر بطاقة، ثم اضغط على الصندوق الصحيح. هل تنجح في ترتيب البطاقات الست؟</p>
+      </header>
+      <div class="memory-game">
+        <div class="chip-pool card reveal" style="--i:3">
+          <div class="pool-head"><strong>البطاقات</strong><span class="game-score" id="memoryScore">0 / 6</span></div>
+          <div class="chip-pool-items" id="chipPool"></div>
+        </div>
+        <div class="bins reveal" style="--i:4">
+          <div class="bin" data-bin="ram" tabindex="0" role="button" aria-label="الذاكرة المؤقتة RAM">
+            <div class="bin-head"><span class="bin-ico" style="--c:#1cb0f6"><svg class="ico"><use href="#i-ram"/></svg></span><div><strong>RAM</strong><small>الذاكرة المؤقتة</small></div></div>
+            <p>تحفظ البرامج المفتوحة حاليًا… وتفقد محتواها بانقطاع الكهرباء.</p>
+            <div class="bin-items"></div>
+          </div>
+          <div class="bin" data-bin="rom" tabindex="0" role="button" aria-label="الذاكرة الدائمة ROM">
+            <div class="bin-head"><span class="bin-ico" style="--c:#ffc800"><svg class="ico"><use href="#i-rom"/></svg></span><div><strong>ROM</strong><small>الذاكرة الدائمة</small></div></div>
+            <p>تحتوي معلومات بدء التشغيل، وقابلة للقراءة فقط.</p>
+            <div class="bin-items"></div>
+          </div>
+          <div class="bin" data-bin="hdd" tabindex="0" role="button" aria-label="القرص الصلب Hard Disk">
+            <div class="bin-head"><span class="bin-ico" style="--c:#58cc02"><svg class="ico"><use href="#i-disk"/></svg></span><div><strong>Hard Disk</strong><small>القرص الصلب</small></div></div>
+            <p>يخزّن الملفات والبرامج ويحتفظ بها بعد إيقاف التشغيل.</p>
+            <div class="bin-items"></div>
+          </div>
+        </div>
+        <div class="game-bar reveal" style="--i:5">
+          <div class="feedback" id="memoryFeedback" aria-live="polite">اختر بطاقة من الأعلى للبدء.</div>
+          <button class="btn btn-ghost btn-sm" id="memoryReset"><svg class="ico"><use href="#i-backup"/></svg> إعادة اللعبة</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-decimal" data-title="النظام العشري" data-key="decimal" data-unit="الوحدة الثانية">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0" data-edit="dec.title">نظام العدّ… والأساس 10</h2>
+        <p class="reveal" style="--i:1" data-edit="dec.sub">نظام العدّ طريقة لتمثيل الأعداد برموز محددة وأساس معين. جرّب عددًا وشاهد قيمته تتوزّع على المنازل.</p>
+      </header>
+      <div class="decimal-layout">
+        <div class="dec-input-card card reveal" style="--i:3">
+          <span class="mini-label">جرّب عددًا من 0 إلى 999</span>
+          <div class="stepper">
+            <button class="step-btn" id="decMinus" aria-label="إنقاص">−</button>
+            <input id="decInput" type="number" min="0" max="999" value="134" aria-label="أدخل عددًا">
+            <button class="step-btn" id="decPlus" aria-label="زيادة">+</button>
+          </div>
+          <div class="preset-row">
+            <button class="preset" data-dec="134">134</button>
+            <button class="preset" data-dec="254">254</button>
+            <button class="preset" data-dec="85">85</button>
+            <button class="preset" data-dec="7">7</button>
+          </div>
+          <div class="base-badge"><span>الأساس</span><strong>10</strong><span>الرموز: من 0 إلى 9</span></div>
+        </div>
+        <div class="dec-display card reveal" style="--i:4">
+          <div class="dec-digits" id="decDigits"></div>
+          <div class="dec-expansion" id="decExpansion"></div>
+        </div>
+      </div>
+      <div class="note-strip reveal" style="--i:5"><svg class="ico"><use href="#i-bulb"/></svg><span data-edit="dec.note">سبب التسمية: لأنه يعتمد على عشرة رموز فقط (0 إلى 9). كل منزلة تساوي 10 أضعاف التي على يمينها.</span></div>
+    </div>
+  </section>
+
+  <section class="slide slide-binary" data-title="النظام الثنائي" data-key="binary" data-unit="الوحدة الثانية">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0" data-edit="bin.title">الحاسوب يفهم… تشغيل أو إيقاف</h2>
+        <p class="reveal" style="--i:1" data-edit="bin.sub">كل مفتاح يمثّل بتًا: 1 يعني تشغيلًا، و0 يعني إيقافًا. جرّب أن تصنع العدد المطلوب.</p>
+      </header>
+      <div class="binary-layout">
+        <div class="switch-lab card reveal" style="--i:2">
+          <div class="lab-head">
+            <div><span class="mini-label">الهدف الحالي</span><strong class="target-num" id="binTarget">13</strong></div>
+            <div class="lab-readout"><span id="binReadout">00000000</span><sub>2</sub><span class="eq">=</span><strong id="binValue">0</strong><sub>10</sub></div>
+          </div>
+          <div class="switches" id="bitSwitches" dir="ltr"></div>
+          <div class="lab-actions">
+            <button class="btn btn-ghost btn-sm" id="binZero"><svg class="ico"><use href="#i-backup"/></svg> تصفير</button>
+            <button class="btn btn-blue btn-sm" id="binNewTarget"><svg class="ico"><use href="#i-target"/></svg> هدف جديد</button>
+            <span class="feedback inline" id="binFeedback" aria-live="polite"></span>
+          </div>
+        </div>
+      </div>
+      <div class="byte-strip reveal" style="--i:3">
+        <div><strong>بايت واحد = 8 بتات</strong><span>كل مفتاح في الأعلى هو بت… وثمانية مفاتيح تصنع بايتًا.</span></div>
+        <div class="byte-bits" dir="ltr"><span>1</span><span>0</span><span>1</span><span>1</span><span>0</span><span>1</span><span>0</span><span>1</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-binary-why" data-title="لماذا الثنائي؟" data-key="binary-why" data-unit="الوحدة الثانية">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0" data-edit="bin.why.title">لماذا يفهم الحاسوب 0 و1 فقط؟</h2>
+        <p class="reveal" style="--i:1">لأن الدوائر الإلكترونية تعرف حالتين واضحتين: إشارة منخفضة، أو إشارة مرتفعة. من هاتين الحالتين تُبنى كل البيانات.</p>
+      </header>
+      <div class="why-grid">
+        <article class="why-card reveal" style="--i:2">
+          <h3>حالتان… لا أكثر</h3>
+          <div class="onoff-big" aria-hidden="true">
+            <span class="off"><b>0</b><small>إيقاف</small></span>
+            <span class="on"><b>1</b><small>تشغيل</small></span>
+          </div>
+          <p>0 تعني إشارة منخفضة (Off)، و1 تعني إشارة مرتفعة (On).</p>
+        </article>
+        <article class="why-card reveal" style="--i:3">
+          <h3>البت والبايت</h3>
+          <p class="why-equation"><b>البت</b> = 0 أو 1<br><b>البايت</b> = 8 بتات</p>
+          <p>البت هو الوحدة الأساسية للمعلومات في الحاسوب.</p>
+        </article>
+        <article class="why-card reveal" style="--i:4">
+          <h3>كل شيء يُرمَّز</h3>
+          <p>الأرقام والنصوص والصور والأصوات تُحوَّل إلى سلاسل من 0 و1، ثم يعيد الحاسوب تفسيرها.</p>
+        </article>
+      </div>
+      <div class="byte-example reveal" style="--i:5">
+        <span>الحرف <b>A</b> في جدول الرموز</span>
+        <code>01000001</code>
+        <span>يساوي 65 في النظام العشري</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-bin2dec" data-title="من الثنائي إلى العشري" data-key="b2d" data-unit="الوحدة الثانية">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0" data-edit="b2d.title">من الثنائي إلى العشري</h2>
+        <p class="reveal" style="--i:1" data-edit="b2d.sub">اضرب كل رقم في 2 مرفوعة لقوة موقعه، ثم اجمع النواتج. جرّب بنفسك.</p>
+      </header>
+      <div class="convert-layout">
+        <div class="converter card reveal" style="--i:3">
+          <div class="conv-input-row">
+            <label for="binToDecInput">العدد الثنائي</label>
+            <div class="conv-input-wrap"><input id="binToDecInput" value="110" inputmode="numeric" autocomplete="off" spellcheck="false"><sub>2</sub></div>
+            <button class="btn btn-primary btn-sm" id="binToDecBtn">حوّل</button>
+          </div>
+          <div class="preset-row">
+            <button class="preset" data-b2d="110">110</button>
+            <button class="preset" data-b2d="1010101">1010101</button>
+            <button class="preset" data-b2d="1001">1001</button>
+            <button class="preset" data-b2d="1111">1111</button>
+          </div>
+          <div class="conv-error" id="binToDecError" aria-live="polite"></div>
+          <div class="steps-table" id="binToDecSteps"></div>
+          <div class="result-bubble" id="binToDecResult"></div>
+        </div>
+        <aside class="method-card card reveal" style="--i:4">
+          <h3><svg class="ico"><use href="#i-book"/></svg> الطريقة بثلاث خطوات</h3>
+          <ol class="method-steps">
+            <li><span>1</span><div><strong>حدّد المواقع</strong><p>ابدأ من يمين العدد: الموقع 0 ثم 1 ثم 2…</p></div></li>
+            <li><span>2</span><div><strong>اضرب في الوزن</strong><p>كل رقم × 2<sup>الموقع</sup>.</p></div></li>
+            <li><span>3</span><div><strong>اجمع</strong><p>اجمع كل النواتج لتحصل على العدد العشري.</p></div></li>
+          </ol>
+          <div class="method-tip"><svg class="ico"><use href="#i-bulb"/></svg><span data-edit="b2d.tip">مثال: (110)₂ = 1×4 + 1×2 + 0×1 = 6</span></div>
+          <div class="method-example">
+            <span class="me-label">مثال ثانٍ</span>
+            <div class="me-row"><b>(1011)₂</b><span>=</span><span>1×8 + 0×4 + 1×2 + 1×1</span><span>=</span><b>11</b></div>
+          </div>
+          <svg class="mascot mini-mascot" viewBox="0 0 220 240"><use href="#robot"/></svg>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-dec2bin" data-title="من العشري إلى الثنائي" data-key="d2b" data-unit="الوحدة الثانية">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0" data-edit="d2b.title">من العشري إلى الثنائي… بالقسمة</h2>
+        <p class="reveal" style="--i:1" data-edit="d2b.sub">نقسم على 2 مرارًا ونسجّل البواقي، ثم نقرأها من الأسفل إلى الأعلى. تابع الخطوات.</p>
+      </header>
+      <div class="ladder-layout">
+        <div class="ladder-card card reveal" style="--i:3">
+          <div class="ladder-head">
+            <div class="ladder-input">
+              <label for="decToBinInput">العدد العشري</label>
+              <input id="decToBinInput" type="number" min="0" max="255" value="254">
+              <button class="btn btn-primary btn-sm" id="ladderStart">ابدأ</button>
+            </div>
+            <div class="preset-row">
+              <button class="preset" data-d2b="254">254</button>
+              <button class="preset" data-d2b="13">13</button>
+              <button class="preset" data-d2b="85">85</button>
+              <button class="preset" data-d2b="100">100</button>
+            </div>
+          </div>
+          <div class="ladder-table" id="ladderTable"></div>
+          <div class="ladder-footer">
+            <button class="btn btn-blue btn-sm" id="ladderNext">الخطوة التالية <svg class="ico"><use href="#i-arrow-left"/></svg></button>
+            <div class="ladder-result" id="ladderResult"></div>
+          </div>
+        </div>
+        <aside class="ladder-method card reveal" style="--i:4">
+          <h3><svg class="ico"><use href="#i-book"/></svg> تذكّر القاعدة</h3>
+          <div class="division-demo">
+            <div class="div-box"><span>القسمة</span><strong>254 ÷ 2</strong></div>
+            <div class="div-arrow"><svg class="ico"><use href="#i-arrow-left"/></svg></div>
+            <div class="div-box"><span>الناتج</span><strong>127</strong></div>
+            <div class="div-box rem"><span>الباقي</span><strong>0</strong></div>
+          </div>
+          <p data-edit="d2b.note">نكرّر القسمة حتى يصبح الناتج صفرًا، ثم نقرأ البواقي من <b>الأسفل إلى الأعلى</b>.</p>
+          <div class="read-up"><span>نقرأ</span><svg class="ico"><use href="#i-upload"/></svg><strong>من الأسفل إلى الأعلى</strong></div>
+          <div class="ladder-example">
+            <span class="le-label">مثال: البواقي من الأسفل إلى الأعلى</span>
+            <div class="le-bits" dir="ltr"><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>0</span></div>
+            <span class="le-result">(254)₁₀ = (11111110)₂</span>
+          </div>
+          <svg class="mascot mini-mascot" viewBox="0 0 220 240"><use href="#robot"/></svg>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-table" data-title="جدول التحويل" data-key="table" data-unit="الوحدة الثانية">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0" data-edit="table.title">جدول التحويل الجاهز (من 0 إلى 16)</h2>
+        <p class="reveal" style="--i:1" data-edit="table.sub">احفظ الجدول… أو اختبر ذاكرتك بإخفاء عمود الثنائي والنقر على الخلايا لكشفها.</p>
+      </header>
+      <div class="table-layout">
+        <div class="table-card card reveal" style="--i:3">
+          <div class="table-tools">
+            <span class="table-count">17 قيمة</span>
+            <button class="btn btn-ghost btn-sm" id="tableToggle"><svg class="ico"><use href="#i-spy"/></svg> اختبرني: أخفِ الثنائي</button>
+          </div>
+          <div class="conv-table-wrap">
+            <table class="conv-table">
+              <thead><tr><th>العشري</th><th>الثنائي</th><th>العشري</th><th>الثنائي</th></tr></thead>
+              <tbody id="convTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <aside class="table-note card reveal" style="--i:4">
+          <h3><svg class="ico"><use href="#i-bulb"/></svg> لاحظ النمط</h3>
+          <p data-edit="table.note">كل زيادة بمقدار 1 في العدد العشري قد تغيّر أكثر من بت واحد. لاحظ كيف تنتقل البتات من اليمين إلى اليسار.</p>
+          <div class="pattern-demo">
+            <span>0</span><span>1</span><span>10</span><span>11</span><span>100</span>
+          </div>
+          <p class="small-note">16 = 10000₂ لأنها أول قوة للعدد 2 بعد 8 (أي 2⁴ = 16).</p>
+          <button class="btn btn-primary btn-sm" data-goto="quiz">جرّب الاختبار الكامل <svg class="ico"><use href="#i-arrow-left"/></svg></button>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-systems" data-title="أنظمة عد أخرى" data-key="systems" data-unit="الوحدة الثانية">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0" data-edit="sys.title">الثماني والستة عشري</h2>
+        <p class="reveal" style="--i:1" data-edit="sys.sub">غيّر الأساس… تتغيّر الرموز المسموحة. جرّب تحدي الرموز في كل نظام.</p>
+      </header>
+      <div class="systems-grid">
+        <div class="system-card card reveal" style="--i:3;--c:#ff9600">
+          <div class="system-head">
+            <span class="system-ico"><svg class="ico"><use href="#i-cpu"/></svg></span>
+            <div><span class="system-en">Octal</span><h3>النظام الثماني</h3></div>
+            <span class="base-pill">الأساس 8</span>
+          </div>
+          <p data-edit="sys.octal">يستخدم ثمانية رموز فقط: من 0 إلى 7.</p>
+          <div class="digit-chips" dir="ltr">
+            <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+          </div>
+          <div class="quick-quiz" data-qq>
+            <p>أي رمز لا يمكن استخدامه في النظام الثماني؟</p>
+            <div class="qq-options">
+              <button data-correct="false">7</button>
+              <button data-correct="true">8</button>
+              <button data-correct="false">0</button>
+              <button data-correct="false">5</button>
+            </div>
+            <div class="qq-feedback"></div>
+          </div>
+        </div>
+        <div class="system-card card reveal" style="--i:4;--c:#ce82ff">
+          <div class="system-head">
+            <span class="system-ico"><svg class="ico"><use href="#i-spark"/></svg></span>
+            <div><span class="system-en">Hexadecimal</span><h3>النظام الستة عشري</h3></div>
+            <span class="base-pill">الأساس 16</span>
+          </div>
+          <p data-edit="sys.hex">يستخدم الرموز من 0 إلى 9 ثم الحروف <span dir="ltr">A, B, C, D, E, F</span>.</p>
+          <div class="digit-chips hex" dir="ltr">
+            <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span>
+          </div>
+          <div class="quick-quiz" data-qq>
+            <p>أي رمز لا يمكن استخدامه في النظام الستة عشري؟</p>
+            <div class="qq-options">
+              <button data-correct="false">A</button>
+              <button data-correct="false">F</button>
+              <button data-correct="true">G</button>
+              <button data-correct="false">9</button>
+            </div>
+            <div class="qq-feedback"></div>
+          </div>
+        </div>
+      </div>
+      <div class="base-compare reveal" style="--i:5">
+        <span class="bc-item" style="--c:#58cc02"><b>10</b> عشري</span>
+        <span class="bc-item" style="--c:#1cb0f6"><b>2</b> ثنائي</span>
+        <span class="bc-item" style="--c:#ff9600"><b>8</b> ثماني</span>
+        <span class="bc-item" style="--c:#ce82ff"><b>16</b> ستة عشري</span>
+        <span class="bc-note">كلما كبر الأساس… احتجنا رموزًا أكثر.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-malware" data-title="البرامج الضارة 1" data-key="malware-1" data-unit="الوحدة الثالثة">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0" data-edit="mw.title">ستة برامج ضارة… اعرف سلوكها</h2>
+        <p class="reveal" style="--i:1" data-edit="mw.sub">البرامج الضارة برامج حاسوبية تُصمم بهدف التخريب أو التجسس أو الاختراق أو إلحاق الضرر. اقلب كل بطاقة لتكتشف سلوكها.</p>
+      </header>
+      <div class="malware-grid">
+        <button class="malware-card reveal" style="--i:2" data-flip aria-label="الفيروس">
+          <span class="mc-inner">
+            <span class="mc-face mc-front" style="--c:#a8342b">
+              <span class="mc-ico"><svg class="ico"><use href="#i-virus"/></svg></span>
+              <strong>الفيروس</strong><span class="mc-en">Virus</span>
+              <span class="danger"><i></i><i></i><i></i><i></i></span>
+              <span class="flip-hint">اضغط للقلب</span>
+            </span>
+            <span class="mc-face mc-back">
+              <strong>Virus</strong>
+              <p>برنامج ضار مرتبط بملف ما، هدفه التخريب وله قدرة تدميرية.</p>
+              <span class="mc-tag">مرتبط بملف مضيف</span>
+            </span>
+          </span>
+        </button>
+        <button class="malware-card reveal" style="--i:3" data-flip aria-label="الدودة">
+          <span class="mc-inner">
+            <span class="mc-face mc-front" style="--c:#a8342b">
+              <span class="mc-ico"><svg class="ico"><use href="#i-worm"/></svg></span>
+              <strong>الدودة</strong><span class="mc-en">Worm</span>
+              <span class="danger"><i></i><i></i><i></i><i></i></span>
+              <span class="flip-hint">اضغط للقلب</span>
+            </span>
+            <span class="mc-face mc-back">
+              <strong>Worm</strong>
+              <p>تنتشر ذاتيًا عبر الشبكات، ولا تحتاج ملفًا مضيفًا، وسريعة الانتشار.</p>
+              <span class="mc-tag">تنتشر ذاتيًا</span>
+            </span>
+          </span>
+        </button>
+        <button class="malware-card reveal" style="--i:4" data-flip aria-label="حصان طروادة">
+          <span class="mc-inner">
+            <span class="mc-face mc-front" style="--c:#a8342b">
+              <span class="mc-ico"><svg class="ico"><use href="#i-trojan"/></svg></span>
+              <strong>حصان طروادة</strong><span class="mc-en">Trojan Horse</span>
+              <span class="danger"><i></i><i></i><i></i></span>
+              <span class="flip-hint">اضغط للقلب</span>
+            </span>
+            <span class="mc-face mc-back">
+              <strong>Trojan Horse</strong>
+              <p>يتنكّر كبرنامج نافع، وهدفه التجسس أو السيطرة أو إلحاق الضرر.</p>
+              <span class="mc-tag">يتنكّر كبرنامج نافع</span>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-malware" data-title="البرامج الضارة 2" data-key="malware-2" data-unit="الوحدة الثالثة">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0">ثلاثة أخرى… وبنفس الخطر</h2>
+        <p class="reveal" style="--i:1">التجسس والدعاية والفدية. اقلب البطاقات، ثم لاحظ الفرق بين برامج التجسس وبرامج الفدية.</p>
+      </header>
+      <div class="malware-grid">
+        <button class="malware-card reveal" style="--i:2" data-flip aria-label="برامج التجسس">
+          <span class="mc-inner">
+            <span class="mc-face mc-front" style="--c:#a8342b">
+              <span class="mc-ico"><svg class="ico"><use href="#i-spy"/></svg></span>
+              <strong>برامج التجسس</strong><span class="mc-en">Spyware</span>
+              <span class="danger"><i></i><i></i><i></i><i></i></span>
+              <span class="flip-hint">اضغط للقلب</span>
+            </span>
+            <span class="mc-face mc-back">
+              <strong>Spyware</strong>
+              <p>تراقب المستخدم وتسرق البيانات والأرقام السرية. ومن أمثلتها Keylogger الذي يسجّل ضغطات المفاتيح.</p>
+              <span class="mc-tag">Keylogger</span>
+            </span>
+          </span>
+        </button>
+        <button class="malware-card reveal" style="--i:3" data-flip aria-label="برامج الدعاية">
+          <span class="mc-inner">
+            <span class="mc-face mc-front" style="--c:#a8342b">
+              <span class="mc-ico"><svg class="ico"><use href="#i-ad"/></svg></span>
+              <strong>برامج الدعاية</strong><span class="mc-en">Adware</span>
+              <span class="danger"><i></i><i></i></span>
+              <span class="flip-hint">اضغط للقلب</span>
+            </span>
+            <span class="mc-face mc-back">
+              <strong>Adware</strong>
+              <p>تعرض إعلانات مزعجة، وتنتشر غالبًا مع البرامج المجانية أو التحميلات غير الموثوقة.</p>
+              <span class="mc-tag">إعلانات مزعجة</span>
+            </span>
+          </span>
+        </button>
+        <button class="malware-card reveal" style="--i:4" data-flip aria-label="برامج الفدية">
+          <span class="mc-inner">
+            <span class="mc-face mc-front" style="--c:#a8342b">
+              <span class="mc-ico"><svg class="ico"><use href="#i-ransom"/></svg></span>
+              <strong>برامج الفدية</strong><span class="mc-en">Ransomware</span>
+              <span class="danger"><i></i><i></i><i></i><i></i></span>
+              <span class="flip-hint">اضغط للقلب</span>
+            </span>
+            <span class="mc-face mc-back">
+              <strong>Ransomware</strong>
+              <p>نوع مستقل يشفّر ملفات الضحية ويطلب فدية مالية لفك التشفير، وغالبًا ينتقل عبر طروادة أو ثغرة.</p>
+              <span class="mc-tag">تشفير + فدية</span>
+            </span>
+          </span>
+        </button>
+      </div>
+      <div class="note-strip danger-note reveal" style="--i:5"><svg class="ico"><use href="#i-spy"/></svg><span data-edit="mw.note">تذكّر: <b>Keylogger</b> نوع من برامج التجسس يسجّل كل ما تكتبه… بما في ذلك كلمات المرور.</span></div>
+    </div>
+  </section>
+
+  <section class="slide slide-routes" data-title="طرق انتقال العدوى" data-key="routes" data-unit="الوحدة الثالثة">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0" data-edit="routes.title">أربعة طرق… وعدوّ واحد</h2>
+        <p class="reveal" style="--i:1" data-edit="routes.sub">اضغط على أي مسار حول الحاسوب لتعرف كيف تتسلل البرامج الضارة إليه.</p>
+      </header>
+      <div class="routes-layout">
+        <div class="routes-stage reveal" style="--i:3">
+          <svg class="routes-svg" viewBox="0 0 600 400" preserveAspectRatio="none" aria-hidden="true">
+            <g class="route-line" data-route="internet">
+              <path id="p-internet" d="M300 200 C220 160 150 90 72 40"/>
+              <circle class="packet" r="5"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#p-internet"/></animateMotion></circle>
+            </g>
+            <g class="route-line" data-route="media">
+              <path id="p-media" d="M300 200 C220 240 150 310 72 360"/>
+              <circle class="packet" r="5"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#p-media"/></animateMotion></circle>
+            </g>
+            <g class="route-line" data-route="vuln">
+              <path id="p-vuln" d="M300 200 C380 160 450 90 528 40"/>
+              <circle class="packet" r="5"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#p-vuln"/></animateMotion></circle>
+            </g>
+            <g class="route-line" data-route="social">
+              <path id="p-social" d="M300 200 C380 240 450 310 528 360"/>
+              <circle class="packet" r="5"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#p-social"/></animateMotion></circle>
+            </g>
+          </svg>
+          <button class="route-node rn-internet" data-route="internet"><span class="rn-ico"><svg class="ico"><use href="#i-globe"/></svg></span><span>الإنترنت</span></button>
+          <button class="route-node rn-media" data-route="media"><span class="rn-ico"><svg class="ico"><use href="#i-usb"/></svg></span><span>وسائط التخزين</span></button>
+          <button class="route-node rn-vuln" data-route="vuln"><span class="rn-ico"><svg class="ico"><use href="#i-warning"/></svg></span><span>الثغرات</span></button>
+          <button class="route-node rn-social" data-route="social"><span class="rn-ico"><svg class="ico"><use href="#i-mask"/></svg></span><span>الهندسة الاجتماعية</span></button>
+          <div class="route-core"><svg class="ico"><use href="#i-desktop"/></svg><span>حاسوبك</span></div>
+        </div>
+        <aside class="route-detail card reveal" style="--i:4">
+          <span class="route-detail-ico" id="routeIcon"><svg class="ico"><use href="#i-globe"/></svg></span>
+          <h3 id="routeTitle">عبر الشبكة والإنترنت</h3>
+          <ul class="check-list" id="routeExamples"></ul>
+          <div class="route-tip" id="routeTip"><svg class="ico"><use href="#i-shield"/></svg><span>لا تفتح الروابط المجهولة حتى لو جاءت من صديق.</span></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-symptoms" data-title="دلائل الإصابة" data-key="symptoms" data-unit="الوحدة الثالثة">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0" data-edit="sym.title">هل هذا الحاسوب مصاب؟</h2>
+        <p class="reveal" style="--i:1" data-edit="sym.sub">افحص الشاشة واضغط على كل علامة غريبة. اكتشف الدلائل الستة… ثم اعرف الأضرار.</p>
+      </header>
+      <div class="symptoms-layout">
+        <div class="pc-scene reveal" style="--i:3">
+          <div class="monitor">
+            <div class="pc-screen">
+              <div class="pc-topbar"><span class="pc-dot"></span><span class="pc-dot"></span><span class="pc-dot"></span><span class="pc-title">حاسوبي</span></div>
+              <div class="pc-desktop">
+                <div class="desk-icons">
+                  <div class="desk-icon"><svg class="ico"><use href="#i-folder"/></svg><span>مستندات</span></div>
+                  <div class="desk-icon weird"><span>؟</span><span>ملف غريب</span></div>
+                  <div class="desk-icon"><svg class="ico"><use href="#i-book"/></svg><span>صور</span></div>
+                </div>
+                <div class="pc-popup"><svg class="ico"><use href="#i-warning"/></svg><span>خطأ غير معروف!</span><i>OK</i></div>
+                <div class="pc-spinner"></div>
+                <div class="pc-cursor"><svg class="ico"><use href="#i-target"/></svg></div>
+                <button class="pc-hotspot hs-slow" data-sym="slow" aria-label="بطء شديد"></button>
+                <button class="pc-hotspot hs-files" data-sym="files" aria-label="ملفات مختفية"></button>
+                <button class="pc-hotspot hs-weird" data-sym="weird" aria-label="أيقونات غريبة"></button>
+                <button class="pc-hotspot hs-errors" data-sym="errors" aria-label="رسائل خطأ متكررة"></button>
+                <button class="pc-hotspot hs-freeze" data-sym="freeze" aria-label="عدم استجابة"></button>
+                <button class="pc-hotspot hs-full" data-sym="full" aria-label="امتلاء التخزين"></button>
+              </div>
+              <div class="pc-taskbar">
+                <div class="pc-storage"><span></span></div>
+                <span class="pc-storage-label">التخزين 99%</span>
+                <div class="pc-start"></div>
+                <span class="pc-clock">12:00</span>
+              </div>
+            </div>
+            <div class="pc-stand"></div><div class="pc-base"></div>
+          </div>
+        </div>
+        <aside class="symptom-panel card reveal" style="--i:4">
+          <div class="symptom-head"><strong>الدلائل المكتشفة</strong><span id="symFound">0 / 6</span></div>
+          <ul class="symptom-list" id="symptomList"></ul>
+          <div class="damage-card" id="damageCard" hidden>
+            <h4><svg class="ico"><use href="#i-warning"/></svg> أضرار البرامج الضارة</h4>
+            <ul class="check-list danger">
+              <li>حذف الملفات أو إخفاؤها.</li>
+              <li>إبطاء عمل الحاسوب.</li>
+              <li>اختراق البيانات والأرقام السرية.</li>
+              <li>إيقاف الحاسوب عن العمل.</li>
+              <li>التكاثر بسرعة وإرهاق الذاكرة.</li>
+            </ul>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="symReset"><svg class="ico"><use href="#i-backup"/></svg> إعادة الفحص</button>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-protection" data-title="الحماية" data-key="protection" data-unit="الوحدة الثالثة">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0" data-edit="prot.title">ابنِ درع الحماية… طبقة بعد طبقة</h2>
+        <p class="reveal" style="--i:1" data-edit="prot.sub">فعّل كل وسيلة حماية وشاهد الدرع يقوى. لا تنسَ الطبقة الأهم: وعيك أنت.</p>
+      </header>
+      <div class="protect-layout">
+        <div class="shield-stage reveal" style="--i:3">
+          <svg class="shield-svg" viewBox="0 0 220 260" aria-hidden="true">
+            <path class="shield-layer l-antivirus" d="M110 15 L195 48 V120 C195 178 160 215 110 240 C60 215 25 178 25 120 V48 Z"/>
+            <path class="shield-layer l-firewall" transform="translate(110 130) scale(.82) translate(-110 -130)" d="M110 15 L195 48 V120 C195 178 160 215 110 240 C60 215 25 178 25 120 V48 Z"/>
+            <path class="shield-layer l-backup" transform="translate(110 130) scale(.64) translate(-110 -130)" d="M110 15 L195 48 V120 C195 178 160 215 110 240 C60 215 25 178 25 120 V48 Z"/>
+            <path class="shield-layer l-encryption" transform="translate(110 130) scale(.46) translate(-110 -130)" d="M110 15 L195 48 V120 C195 178 160 215 110 240 C60 215 25 178 25 120 V48 Z"/>
+            <circle class="shield-core" cx="110" cy="132" r="30"/>
+            <g class="shield-lock" transform="translate(98 118)"><rect x="0" y="10" width="24" height="19" rx="4"/><path d="M6 10V7a6 6 0 0 1 12 0v3M12 17v4"/></g>
+          </svg>
+          <div class="shield-status"><span id="shieldCount">0 / 4</span><small>طبقات مفعّلة</small></div>
+          <div class="shield-msg" id="shieldMsg">الدرع ضعيف… فعّل وسائل الحماية.</div>
+        </div>
+        <div class="protect-list reveal" style="--i:4">
+          <button class="protect-card" data-protect="antivirus" aria-pressed="false" style="--c:#58cc02">
+            <span class="protect-ico"><svg class="ico"><use href="#i-shield"/></svg></span>
+            <span class="protect-text"><strong>مضاد الفيروسات <small>Antivirus</small></strong><em>يفحص الملفات ويكتشف البرامج الضارة ويزيلها.</em></span>
+            <span class="switch mini"><span></span></span>
+          </button>
+          <button class="protect-card" data-protect="firewall" aria-pressed="false" style="--c:#1cb0f6">
+            <span class="protect-ico"><svg class="ico"><use href="#i-firewall"/></svg></span>
+            <span class="protect-text"><strong>جدار الحماية <small>Firewall</small></strong><em>يحمي الحاسوب من الاختراق عبر الشبكة.</em></span>
+            <span class="switch mini"><span></span></span>
+          </button>
+          <button class="protect-card" data-protect="backup" aria-pressed="false" style="--c:#ffc800">
+            <span class="protect-ico"><svg class="ico"><use href="#i-backup"/></svg></span>
+            <span class="protect-text"><strong>النسخ الاحتياطي <small>Backup</small></strong><em>ينسخ الملفات المهمة على وسائط تخزين خارجية.</em></span>
+            <span class="switch mini"><span></span></span>
+          </button>
+          <button class="protect-card" data-protect="encryption" aria-pressed="false" style="--c:#ce82ff">
+            <span class="protect-ico"><svg class="ico"><use href="#i-lock"/></svg></span>
+            <span class="protect-text"><strong>التشفير <small>Encryption</small></strong><em>يحوّل المعلومات الحساسة إلى صيغة غير مفهومة بمفتاح تشفير.</em></span>
+            <span class="switch mini"><span></span></span>
+          </button>
+        </div>
+      </div>
+      <div class="awareness-card reveal" style="--i:5">
+        <span class="awareness-ico"><svg class="ico"><use href="#i-spy"/></svg></span>
+        <div><strong>خط الدفاع الأول: وعي المستخدم</strong><p data-edit="prot.awareness">حتى مع وجود مضاد الفيروسات وجدار الحماية، قد لا تنفعك البرامج إن لم تكن متيقظًا وحذرًا أثناء استخدام الحاسوب والإنترنت.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-quiz" data-title="الاختبار" data-key="quiz" data-unit="الختام">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0" data-edit="quiz.title">هل أنت مستعد؟</h2>
+        <p class="reveal" style="--i:1" data-edit="quiz.sub">عشرة أسئلة من الوحدات الثلاث. اختر الإجابة… وستعرف السبب فورًا.</p>
+      </header>
+      <div class="quiz-shell card reveal" style="--i:3">
+        <div class="quiz-head">
+          <div class="quiz-progress"><span id="quizProgress"></span></div>
+          <span class="quiz-counter" id="quizCounter">1 / 10</span>
+          <span class="quiz-score" id="quizScore">0 XP</span>
+        </div>
+        <div id="quizBody"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-recap" data-title="الخلاصة" data-key="recap" data-unit="الختام">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0" data-edit="recap.title">ماذا تعلّمنا اليوم؟</h2>
+        <p class="reveal" style="--i:1" data-edit="recap.sub">ثلاث حقائب معرفية… خذها معك، وشاركها مع زميلك.</p>
+      </header>
+      <div class="recap-grid">
+        <div class="recap-card card reveal" style="--i:2;--c:#146c47">
+          <span class="recap-ico"><svg class="ico"><use href="#i-desktop"/></svg></span>
+          <h3>الحاسوب ومكوناته</h3>
+          <ul class="check-list">
+            <li>4 أنواع: محمول، ثابت، خادم، ضخم.</li>
+            <li>اللوحة الأم تربط كل القطع.</li>
+            <li>RAM مؤقتة، ROM دائمة، والقرص يخزّن.</li>
+          </ul>
+        </div>
+        <div class="recap-card card reveal" style="--i:3;--c:#1f5f86">
+          <span class="recap-ico"><svg class="ico"><use href="#i-cpu"/></svg></span>
+          <h3>لغة الآلة</h3>
+          <ul class="check-list">
+            <li>الثنائي أساسه 2 ورموزه 0 و1.</li>
+            <li>البايت = 8 بتات.</li>
+            <li>نحوّل بالضرب في قوى 2 أو بالقسمة المتكررة.</li>
+          </ul>
+        </div>
+        <div class="recap-card card reveal" style="--i:4;--c:#6c4769">
+          <span class="recap-ico"><svg class="ico"><use href="#i-shield"/></svg></span>
+          <h3>الحماية الرقمية</h3>
+          <ul class="check-list">
+            <li>البرامج الضارة: فيروس، دودة، طروادة…</li>
+            <li>تنتقل بالشبكة والوسائط والثغرات والخداع.</li>
+            <li>مضاد فيروسات + جدار حماية + نسخ + تشفير + وعي.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-homework" data-title="تحدي المنزل" data-key="homework" data-unit="الختام">
+    <div class="slide-inner">
+      <header class="slide-head compact">
+        <h2 class="reveal" style="--i:0">قبل أن تغلق الحاسوب</h2>
+        <p class="reveal" style="--i:1">ثلاث مهام قصيرة تثبّت ما تعلّمته اليوم. اكتب إجاباتك، ثم راجعها في الحصة القادمة.</p>
+      </header>
+      <div class="challenge-card homework-card reveal" style="--i:2">
+        <div class="challenge-copy">
+          <span class="chip">تحدي المنزل</span>
+          <h3 data-edit="recap.challenge.title">علّم زميلك… ثم اختبره</h3>
+          <p data-edit="recap.challenge.text">اشرح له الفرق بين RAM وROM في دقيقة، ثم حوّل العدد 25 إلى النظام الثنائي، واذكر وسيلتين للحماية من البرامج الضارة.</p>
+        </div>
+        <ol class="homework-list">
+          <li><span>1</span> اشرح الفرق بين RAM وROM في دقيقة واحدة.</li>
+          <li><span>2</span> حوّل العدد 25 إلى النظام الثنائي، وبيّن خطوات القسمة.</li>
+          <li><span>3</span> اذكر وسيلتين للحماية، وسبب أهمية وعي المستخدم.</li>
+        </ol>
+      </div>
+      <div class="homework-result reveal" style="--i:3">
+        <div class="challenge-xp">
+          <svg class="mascot" viewBox="0 0 220 240"><use href="#robot"/></svg>
+          <div><strong id="finalXP">0 XP</strong><span>حصيلة هذه الجلسة</span></div>
+        </div>
+        <div class="recap-actions">
+          <button class="btn btn-primary" data-goto="cover"><svg class="ico"><use href="#i-play"/></svg> أعد العرض من البداية</button>
+          <button class="btn btn-ghost" data-goto="quiz"><svg class="ico"><use href="#i-target"/></svg> جرّب الاختبار مرة أخرى</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<nav class="deck-nav" aria-label="التنقل بين الشرائح">
+  <button class="nav-btn" id="prevBtn" aria-label="الشريحة السابقة"><svg class="ico"><use href="#i-arrow-right"/></svg><span>السابق</span></button>
+  <div class="nav-center">
+    <span id="navCounter">1 / 21</span>
+    <div class="nav-dots" id="navDots"></div>
+  </div>
+  <button class="nav-btn nav-next" id="nextBtn" aria-label="الشريحة التالية"><span>التالي</span><svg class="ico"><use href="#i-arrow-left"/></svg></button>
+</nav>
+
+<aside class="editor" id="editor" aria-hidden="true">
+  <div class="editor-head">
+    <div><strong>لوحة التحرير</strong><span>عدّل المحتوى ببساطة</span></div>
+    <button class="icon-btn" id="editorClose" aria-label="إغلاق لوحة التحرير"><svg class="ico"><use href="#i-x"/></svg></button>
+  </div>
+  <div class="editor-body">
+    <div class="editor-section">
+      <div class="edit-toggle-row">
+        <div><strong>التحرير المباشر</strong><span>اضغط أي نص في الشريحة وعدّله</span></div>
+        <button class="switch" id="editToggle" role="switch" aria-checked="false"><span></span></button>
+      </div>
+      <div class="save-status" id="saveStatus">التغييرات تُحفظ تلقائيًا في هذا المتصفح.</div>
+    </div>
+    <div class="editor-section">
+      <h4>فهرس الشرائح</h4>
+      <div class="outline" id="outline"></div>
+    </div>
+    <div class="editor-section">
+      <h4>نسخ احتياطي</h4>
+      <div class="editor-actions">
+        <button id="exportBtn"><svg class="ico"><use href="#i-download"/></svg> تصدير المحتوى</button>
+        <button id="importBtn"><svg class="ico"><use href="#i-upload"/></svg> استيراد</button>
+        <input type="file" id="importFile" accept="application/json" hidden>
+        <button id="resetBtn" class="danger"><svg class="ico"><use href="#i-trash"/></svg> استعادة الأصل</button>
+      </div>
+    </div>
+    <p class="editor-tip">نصيحة: استخدم <kbd>F</kbd> لملء الشاشة أثناء العرض، والأسهم للتنقل. تُحفظ تعديلاتك في هذا المتصفح فقط، ويمكنك تصديرها لنسخة احتياطية.</p>
+  </div>
+</aside>
+<div class="scrim" id="scrim"></div>
+<div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+<div class="toast" id="toast" aria-live="polite"></div>
+
+<script src="app.js?v=3"></script>
+<script src="demos.js?v=3"></script>
+<script src="demos2.js?v=3"></script>
+</body>
+</html>
