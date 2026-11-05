@@ -3,6 +3,7 @@
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
+  /* ---------------- لعبة الذاكرة: بطاقة واحدة في كل مرة ---------------- */
   const memoryStatements = [
     { text: 'تفقد محتواها عند انقطاع التيار الكهربائي', answer: 'ram' },
     { text: 'تحتوي معلومات بدء التشغيل', answer: 'rom' },
@@ -11,11 +12,13 @@
     { text: 'قابلة للقراءة فقط ولا يمكن تغيير محتوياتها', answer: 'rom' },
     { text: 'تحتفظ بالبرامج والبيانات بعد إيقاف التشغيل', answer: 'hdd' }
   ];
-  const pool = $('#chipPool');
+  const memoryCard = $('#memoryCard');
   const memoryScore = $('#memoryScore');
   const memoryFeedback = $('#memoryFeedback');
-  const bins = $$('.bin');
-  let selectedChip = null;
+  const memoryReset = $('#memoryReset');
+  const bins = $$('.memory-bins .bin');
+  let pool = [];
+  let currentStatement = null;
   let solved = 0;
 
   function shuffle(items) {
@@ -29,89 +32,83 @@
     return copy;
   }
 
-  function renderPool() {
-    pool.innerHTML = '';
-    shuffle(memoryStatements).forEach((statement) => {
-      const chip = document.createElement('button');
-      chip.type = 'button';
-      chip.textContent = statement.text;
-      chip.dataset.answer = statement.answer;
-      chip.addEventListener('click', () => {
-        if (chip.classList.contains('gone')) return;
-        $$('button', pool).forEach((item) => item.classList.remove('is-selected'));
-        chip.classList.add('is-selected');
-        selectedChip = chip;
-        memoryFeedback.className = 'feedback';
-        memoryFeedback.textContent = 'اختر الصندوق المناسب للبطاقة.';
-      });
-      pool.appendChild(chip);
-    });
+  function updateScore() {
+    if (memoryScore) memoryScore.textContent = solved + ' / ' + memoryStatements.length;
   }
 
-  function updateScore() {
-    memoryScore.textContent = solved + ' / ' + memoryStatements.length;
+  function renderCard() {
+    if (!memoryCard) return;
+    if (!pool.length) {
+      currentStatement = null;
+      memoryCard.textContent = 'أحسنت! رتّبت كل البطاقات في مكانها الصحيح.';
+      return;
+    }
+    currentStatement = pool.pop();
+    memoryCard.textContent = currentStatement.text;
+    memoryCard.classList.remove('pop');
+    void memoryCard.offsetWidth;
+    memoryCard.classList.add('pop');
   }
 
   function tryPlace(bin) {
-    if (!selectedChip) {
-      memoryFeedback.className = 'feedback bad';
-      memoryFeedback.textContent = 'اختر بطاقة من الأعلى أولًا.';
+    if (!currentStatement) {
+      memoryFeedback.className = 'feedback';
+      memoryFeedback.textContent = 'انتهت البطاقات… اضغط «إعادة اللعبة» للبدء من جديد.';
       return;
     }
-    const correct = selectedChip.dataset.answer === bin.dataset.bin;
-    if (!correct) {
+    if (currentStatement.answer !== bin.dataset.bin) {
       bin.classList.add('wrong');
       setTimeout(() => bin.classList.remove('wrong'), 450);
       memoryFeedback.className = 'feedback pop bad';
       memoryFeedback.textContent = 'ليست هذه الذاكرة المناسبة… فكّر مرة أخرى.';
       return;
     }
-    const label = document.createElement('span');
-    label.textContent = selectedChip.textContent;
-    bin.querySelector('.bin-items').appendChild(label);
-    selectedChip.classList.remove('is-selected');
-    selectedChip.classList.add('gone');
-    selectedChip = null;
+    bin.classList.add('done');
     solved++;
     updateScore();
     memoryFeedback.className = 'feedback pop good';
     memoryFeedback.textContent = 'إجابة صحيحة! ' + solved + ' من ' + memoryStatements.length;
     addXP(2);
+    currentStatement = null;
     if (solved === memoryStatements.length) {
       memoryFeedback.className = 'feedback pop good';
       memoryFeedback.textContent = 'رائع! رتّبت كل البطاقات في مكانها الصحيح.';
       addXP(6, 'أتقنت أنواع الذاكرة!');
       confetti(85);
+      renderCard();
+    } else {
+      renderCard();
     }
   }
 
-  bins.forEach((bin) => {
-    bin.addEventListener('click', () => tryPlace(bin));
-    bin.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        tryPlace(bin);
-      }
-    });
-  });
-
-  function resetMemory() {
-    solved = 0;
-    selectedChip = null;
-    updateScore();
-    renderPool();
+  if (memoryCard) {
     bins.forEach((bin) => {
-      bin.querySelector('.bin-items').innerHTML = '';
-      bin.classList.remove('wrong');
+      bin.addEventListener('click', () => tryPlace(bin));
+      bin.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          tryPlace(bin);
+        }
+      });
     });
-    memoryFeedback.className = 'feedback';
-    memoryFeedback.textContent = 'اختر بطاقة من الأعلى للبدء.';
+
+    memoryReset.addEventListener('click', () => {
+      solved = 0;
+      currentStatement = null;
+      pool = shuffle(memoryStatements);
+      bins.forEach((bin) => bin.classList.remove('done', 'wrong'));
+      updateScore();
+      memoryFeedback.className = 'feedback';
+      memoryFeedback.textContent = 'اختر الذاكرة المناسبة للبطاقة.';
+      renderCard();
+    });
+
+    pool = shuffle(memoryStatements);
+    updateScore();
+    renderCard();
   }
 
-  $('#memoryReset').addEventListener('click', resetMemory);
-  updateScore();
-  renderPool();
-
+  /* ---------------- النظام العشري ---------------- */
   const decInput = $('#decInput');
   const decDigits = $('#decDigits');
   const decExpansion = $('#decExpansion');
@@ -139,17 +136,20 @@
       '<span class="op">=</span><span class="sum">' + number + '</span>';
   }
 
-  decInput.addEventListener('input', () => {
-    if (decInput.value === '') return;
-    renderDecimal(decInput.value);
-  });
-  decInput.addEventListener('blur', () => renderDecimal(decInput.value));
-  decInput.addEventListener('change', () => renderDecimal(decInput.value));
-  $('#decMinus').addEventListener('click', () => renderDecimal(Number(decInput.value) - 1));
-  $('#decPlus').addEventListener('click', () => renderDecimal(Number(decInput.value) + 1));
-  $$('[data-dec]').forEach((button) => button.addEventListener('click', () => renderDecimal(button.dataset.dec)));
-  renderDecimal(134);
+  if (decInput) {
+    decInput.addEventListener('input', () => {
+      if (decInput.value === '') return;
+      renderDecimal(decInput.value);
+    });
+    decInput.addEventListener('blur', () => renderDecimal(decInput.value));
+    decInput.addEventListener('change', () => renderDecimal(decInput.value));
+    $('#decMinus').addEventListener('click', () => renderDecimal(Number(decInput.value) - 1));
+    $('#decPlus').addEventListener('click', () => renderDecimal(Number(decInput.value) + 1));
+    $$('[data-dec]').forEach((button) => button.addEventListener('click', () => renderDecimal(button.dataset.dec)));
+    renderDecimal(345);
+  }
 
+  /* ---------------- مختبر الثنائي ---------------- */
   const weights = [128, 64, 32, 16, 8, 4, 2, 1];
   const bits = [0, 0, 0, 0, 0, 0, 0, 0];
   const switches = $('#bitSwitches');
@@ -160,76 +160,79 @@
   let target = 13;
   let targetDone = false;
 
-  switches.innerHTML = weights.map((weight, index) =>
-    '<button type="button" class="bit-switch" data-index="' + index + '" aria-pressed="false">' +
-    '<span class="bit-weight">' + weight + '</span>' +
-    '<span class="switch-track"><span class="switch-thumb"></span></span>' +
-    '<span class="bit-state">0</span>' +
-    '</button>'
-  ).join('');
+  if (switches) {
+    switches.innerHTML = weights.map((weight, index) =>
+      '<button type="button" class="bit-switch" data-index="' + index + '" aria-pressed="false">' +
+      '<span class="bit-weight">' + weight + '</span>' +
+      '<span class="switch-track"><span class="switch-thumb"></span></span>' +
+      '<span class="bit-state">0</span>' +
+      '</button>'
+    ).join('');
 
-  const switchButtons = $$('.bit-switch', switches);
+    const switchButtons = $$('.bit-switch', switches);
 
-  function updateBinary() {
-    let value = 0;
-    switchButtons.forEach((button, index) => {
-      const on = bits[index] === 1;
-      button.classList.toggle('is-on', on);
-      button.setAttribute('aria-pressed', on ? 'true' : 'false');
-      button.querySelector('.bit-state').textContent = bits[index];
-      if (on) value += weights[index];
-    });
-    binReadout.textContent = bits.join('');
-    binValue.textContent = value;
-    if (value === target) {
-      if (!targetDone) {
-        targetDone = true;
-        binFeedback.className = 'feedback pop good';
-        binFeedback.textContent = 'أحسنت! هذا هو العدد ' + target + ' بالثنائي.';
-        addXP(10, '+10 XP');
-        confetti(70);
-      }
-    } else if (!targetDone) {
-      binFeedback.className = 'feedback';
-      binFeedback.textContent = 'حاول أن تجعل القيمة تساوي ' + target + '.';
-    }
-  }
-
-  switchButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const index = Number(button.dataset.index);
-      bits[index] = bits[index] ? 0 : 1;
-      if (targetDone) {
+    function updateBinary() {
+      let value = 0;
+      switchButtons.forEach((button, index) => {
+        const on = bits[index] === 1;
+        button.classList.toggle('is-on', on);
+        button.setAttribute('aria-pressed', on ? 'true' : 'false');
+        button.querySelector('.bit-state').textContent = bits[index];
+        if (on) value += weights[index];
+      });
+      binReadout.textContent = bits.join('');
+      binValue.textContent = value;
+      if (value === target) {
+        if (!targetDone) {
+          targetDone = true;
+          binFeedback.className = 'feedback pop good';
+          binFeedback.textContent = 'أحسنت! هذا هو العدد ' + target + ' بالثنائي.';
+          addXP(10, '+10 XP');
+          confetti(70);
+        }
+      } else if (!targetDone) {
         binFeedback.className = 'feedback';
-        binFeedback.textContent = '';
+        binFeedback.textContent = 'حاول أن تجعل القيمة تساوي ' + target + '.';
       }
+    }
+
+    switchButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const index = Number(button.dataset.index);
+        bits[index] = bits[index] ? 0 : 1;
+        if (targetDone) {
+          binFeedback.className = 'feedback';
+          binFeedback.textContent = '';
+        }
+        updateBinary();
+      });
+    });
+
+    $('#binZero').addEventListener('click', () => {
+      bits.fill(0);
+      targetDone = false;
+      binFeedback.className = 'feedback';
+      binFeedback.textContent = 'حاول الوصول إلى الهدف من جديد.';
       updateBinary();
     });
-  });
 
-  $('#binZero').addEventListener('click', () => {
-    bits.fill(0);
-    targetDone = false;
-    binFeedback.className = 'feedback';
-    binFeedback.textContent = 'حاول الوصول إلى الهدف من جديد.';
+    $('#binNewTarget').addEventListener('click', () => {
+      const targets = [5, 9, 13, 21, 42, 85, 100, 111];
+      let next = targets[Math.floor(Math.random() * targets.length)];
+      if (next === target) next = targets[(targets.indexOf(next) + 1) % targets.length];
+      target = next;
+      targetDone = false;
+      bits.fill(0);
+      binTarget.textContent = target;
+      binFeedback.className = 'feedback';
+      binFeedback.textContent = 'هدف جديد: اصنع العدد ' + target + '.';
+      updateBinary();
+    });
+
     updateBinary();
-  });
+  }
 
-  $('#binNewTarget').addEventListener('click', () => {
-    const targets = [5, 9, 13, 21, 42, 85, 100, 111];
-    let next = targets[Math.floor(Math.random() * targets.length)];
-    if (next === target) next = targets[(targets.indexOf(next) + 1) % targets.length];
-    target = next;
-    targetDone = false;
-    bits.fill(0);
-    binTarget.textContent = target;
-    binFeedback.className = 'feedback';
-    binFeedback.textContent = 'هدف جديد: اصنع العدد ' + target + '.';
-    updateBinary();
-  });
-
-  updateBinary();
-
+  /* ---------------- من الثنائي إلى العشري ---------------- */
   const binToDecInput = $('#binToDecInput');
   const binToDecSteps = $('#binToDecSteps');
   const binToDecResult = $('#binToDecResult');
@@ -237,8 +240,8 @@
 
   function convertBinary(raw) {
     const value = String(raw).trim();
-    if (!/^[01]{1,12}$/.test(value)) {
-      binToDecError.textContent = 'اكتب عددًا ثنائيًا يتكوّن من 0 و1 فقط (حتى 12 بت).';
+    if (!/^[01]{1,8}$/.test(value)) {
+      binToDecError.textContent = 'اكتب عددًا ثنائيًا من 0 و1 فقط (حتى 8 بتات).';
       binToDecSteps.innerHTML = '';
       binToDecResult.classList.remove('show');
       return;
@@ -264,23 +267,26 @@
     binToDecResult.classList.add('show');
   }
 
-  $('#binToDecBtn').addEventListener('click', () => convertBinary(binToDecInput.value));
-  binToDecInput.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') convertBinary(binToDecInput.value);
-  });
-  $$('[data-b2d]').forEach((button) => {
-    button.addEventListener('click', () => {
-      binToDecInput.value = button.dataset.b2d;
-      convertBinary(button.dataset.b2d);
+  if (binToDecInput) {
+    $('#binToDecBtn').addEventListener('click', () => convertBinary(binToDecInput.value));
+    binToDecInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') convertBinary(binToDecInput.value);
     });
-  });
-  convertBinary('110');
+    $$('[data-b2d]').forEach((button) => {
+      button.addEventListener('click', () => {
+        binToDecInput.value = button.dataset.b2d;
+        convertBinary(button.dataset.b2d);
+      });
+    });
+    convertBinary('110');
+  }
 
+  /* ---------------- من العشري إلى الثنائي ---------------- */
   const decToBinInput = $('#decToBinInput');
   const ladderTable = $('#ladderTable');
   const ladderResult = $('#ladderResult');
   const ladderNext = $('#ladderNext');
-  const ladderCard = ladderTable.closest('.ladder-card');
+  const ladderCard = ladderTable ? ladderTable.closest('.ladder-card') : null;
   let ladderRows = [];
   let ladderStep = 0;
   let ladderDone = false;
@@ -331,16 +337,19 @@
     }
   }
 
-  ladderNext.addEventListener('click', revealLadderStep);
-  $('#ladderStart').addEventListener('click', () => buildLadder(decToBinInput.value));
-  decToBinInput.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') buildLadder(decToBinInput.value);
-  });
-  $$('[data-d2b]').forEach((button) => {
-    button.addEventListener('click', () => buildLadder(button.dataset.d2b));
-  });
-  buildLadder(254);
+  if (decToBinInput) {
+    ladderNext.addEventListener('click', revealLadderStep);
+    $('#ladderStart').addEventListener('click', () => buildLadder(decToBinInput.value));
+    decToBinInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') buildLadder(decToBinInput.value);
+    });
+    $$('[data-d2b]').forEach((button) => {
+      button.addEventListener('click', () => buildLadder(button.dataset.d2b));
+    });
+    buildLadder(254);
+  }
 
+  /* ---------------- جدول التحويل ---------------- */
   const convTableBody = $('#convTableBody');
   const convTable = $('.conv-table');
   const tableToggle = $('#tableToggle');
@@ -350,33 +359,36 @@
     return number.toString(2).padStart(4, '0');
   }
 
-  convTableBody.innerHTML = Array.from({ length: 9 }, (_, number) => {
-    const second = number + 9;
-    const left = '<td class="dec-cell">' + number + '</td><td class="bin-cell" data-binary="' + toBinary(number) + '">' + toBinary(number) + '</td>';
-    const right = second <= 16
-      ? '<td class="dec-cell">' + second + '</td><td class="bin-cell" data-binary="' + toBinary(second) + '">' + toBinary(second) + '</td>'
-      : '<td class="dec-cell empty">—</td><td class="bin-cell empty">—</td>';
-    return '<tr>' + left + right + '</tr>';
-  }).join('');
+  if (convTableBody) {
+    convTableBody.innerHTML = Array.from({ length: 9 }, (_, number) => {
+      const second = number + 9;
+      const left = '<td class="dec-cell">' + number + '</td><td class="bin-cell" data-binary="' + toBinary(number) + '">' + toBinary(number) + '</td>';
+      const right = second <= 16
+        ? '<td class="dec-cell">' + second + '</td><td class="bin-cell" data-binary="' + toBinary(second) + '">' + toBinary(second) + '</td>'
+        : '<td class="dec-cell empty">—</td><td class="bin-cell empty">—</td>';
+      return '<tr>' + left + right + '</tr>';
+    }).join('');
 
-  tableToggle.addEventListener('click', () => {
-    tableHidden = !tableHidden;
-    convTable.classList.toggle('hide-bin', tableHidden);
-    if (tableHidden) {
-      $$('.bin-cell', convTable).forEach((cell) => cell.classList.remove('revealed'));
-      tableToggle.innerHTML = '<svg class="ico"><use href="#i-spy"/></svg> أظهر الثنائي';
-    } else {
-      $$('.bin-cell', convTable).forEach((cell) => cell.classList.add('revealed'));
-      tableToggle.innerHTML = '<svg class="ico"><use href="#i-spy"/></svg> اختبرني: أخفِ الثنائي';
-    }
-  });
+    tableToggle.addEventListener('click', () => {
+      tableHidden = !tableHidden;
+      convTable.classList.toggle('hide-bin', tableHidden);
+      if (tableHidden) {
+        $$('.bin-cell', convTable).forEach((cell) => cell.classList.remove('revealed'));
+        tableToggle.innerHTML = '<svg class="ico"><use href="#i-spy"/></svg> أظهر الثنائي';
+      } else {
+        $$('.bin-cell', convTable).forEach((cell) => cell.classList.add('revealed'));
+        tableToggle.innerHTML = '<svg class="ico"><use href="#i-spy"/></svg> اختبرني: أخفِ الثنائي';
+      }
+    });
 
-  convTableBody.addEventListener('click', (event) => {
-    const cell = event.target.closest('.bin-cell');
-    if (!cell || !tableHidden) return;
-    cell.classList.add('revealed');
-  });
+    convTableBody.addEventListener('click', (event) => {
+      const cell = event.target.closest('.bin-cell');
+      if (!cell || !tableHidden) return;
+      cell.classList.add('revealed');
+    });
+  }
 
+  /* ---------------- اختبارات الأنظمة السريعة ---------------- */
   $$('[data-qq]').forEach((quiz) => {
     const buttons = $$('button', quiz);
     const feedback = $('.qq-feedback', quiz);
@@ -403,6 +415,7 @@
     });
   });
 
+  /* ---------------- بطاقات القلب ---------------- */
   const seenCards = new Set();
   $$('[data-flip]').forEach((card) => {
     card.setAttribute('aria-pressed', 'false');

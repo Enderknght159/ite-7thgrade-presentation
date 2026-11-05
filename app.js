@@ -65,12 +65,14 @@ const outline = $('#outline');
 const outlineButtons = [];
 
 slides.forEach((slide, i) => {
-  const dot = document.createElement('button');
-  dot.type = 'button';
-  dot.className = 'nav-dot';
-  dot.setAttribute('aria-label', 'الشريحة ' + (i + 1) + ': ' + (slide.dataset.title || ''));
-  dot.addEventListener('click', () => goTo(i));
-  navDots.appendChild(dot);
+  if (navDots) {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'nav-dot';
+    dot.setAttribute('aria-label', 'الشريحة ' + (i + 1) + ': ' + (slide.dataset.title || ''));
+    dot.addEventListener('click', () => goTo(i));
+    navDots.appendChild(dot);
+  }
 
   const item = document.createElement('button');
   item.type = 'button';
@@ -79,7 +81,7 @@ slides.forEach((slide, i) => {
     goTo(i);
     if (window.innerWidth < 900) closeEditor();
   });
-  outline.appendChild(item);
+  if (outline) outline.appendChild(item);
   outlineButtons.push(item);
 });
 
@@ -103,7 +105,7 @@ function goTo(index, options = {}) {
   if (prevBtn) prevBtn.disabled = index === 0;
   if (nextBtn) nextBtn.disabled = index === total - 1;
   if (!options.keepScroll) slides[index].scrollTop = 0;
-  document.dispatchEvent(new CustomEvent('it7:slide', { detail: { index } }));
+  document.dispatchEvent(new CustomEvent('it7:slide', { detail: { index, key: slides[index].dataset.key || '' } }));
 }
 
 function goToKey(key) {
@@ -312,71 +314,11 @@ $('#resetBtn').addEventListener('click', () => {
 });
 
 const typeData = {
-  laptop: {
-    name: 'الحاسوب المحمول',
-    en: 'Laptop',
-    icon: 'laptop',
-    color: '#58cc02',
-    desc: 'حاسوب صغير الحجم يمكن حمله بسهولة، وتكون الشاشة ولوحة المفاتيح مدمجتين فيه.',
-    points: ['صغير الحجم ويمكن حمله بسهولة', 'الشاشة ولوحة المفاتيح مدمجتان', 'يعمل ببطارية قابلة للشحن'],
-    use: 'مناسب للطلاب والتنقل بين المنزل والمدرسة.'
-  },
-  desktop: {
-    name: 'الحاسوب الثابت',
-    en: 'Desktop',
-    icon: 'desktop',
-    color: '#1cb0f6',
-    desc: 'حاسوب ثابت في مكانه، تتصل قطعه ببعضها داخل صندوق الحاسوب، ويمكن ترقية مكوناته بسهولة.',
-    points: ['يبقى في مكان ثابت', 'الشاشة ولوحة المفاتيح منفصلتان', 'يمكن ترقية مكوناته بسهولة'],
-    use: 'مناسب للمنزل والمكاتب وأعمال التصميم.'
-  },
-  server: {
-    name: 'الحاسوب الخادم',
-    en: 'Server',
-    icon: 'server',
-    color: '#ce82ff',
-    desc: 'حاسوب قوي يقدّم خدماته لعدة مستخدمين في الوقت نفسه، ويحفظ الملفات المشتركة بينهم.',
-    points: ['يخدم عدة مستخدمين في الوقت نفسه', 'يحفظ الملفات المشتركة', 'يبقى يعمل باستمرار'],
-    use: 'مناسب للشركات والمدارس والمؤسسات.'
-  },
-  super: {
-    name: 'الحواسب الضخمة',
-    en: 'Super Computers',
-    icon: 'super',
-    color: '#ff9600',
-    desc: 'حواسيب فائقة القدرة تُستخدم لإجراء حسابات ومحاكاات معقدة بسرعة هائلة.',
-    points: ['قدرة معالجة هائلة', 'تُستخدم في الأبحاث والمحاكاات المعقدة', 'حجمها كبير وتكلفتها مرتفعة'],
-    use: 'مناسب للأرصاد الجوية وأبحاث الفضاء والعلوم.'
-  }
+  laptop: { name: 'الحاسوب المحمول' },
+  desktop: { name: 'الحاسوب الثابت' },
+  server: { name: 'الحاسوب الخادم' },
+  super: { name: 'الحواسب الضخمة' }
 };
-
-const typeCards = $$('.type-card');
-const typeDetailIcon = $('#typeDetailIcon');
-const typeIconUse = typeDetailIcon.querySelector('use');
-const typeEn = $('#typeEn');
-const typeName = $('#typeName');
-const typeDesc = $('#typeDesc');
-const typePoints = $('#typePoints');
-const typeUseText = $('#typeUse span');
-
-function selectType(key) {
-  const data = typeData[key];
-  if (!data) return;
-  typeCards.forEach((card) => card.classList.toggle('is-active', card.dataset.type === key));
-  typeIconUse.setAttribute('href', '#i-' + data.icon);
-  typeDetailIcon.style.color = data.color;
-  typeDetailIcon.style.background = 'color-mix(in srgb, ' + data.color + ' 13%, #fff)';
-  typeEn.textContent = data.en;
-  typeName.textContent = data.name;
-  typeDesc.textContent = data.desc;
-  typePoints.innerHTML = data.points.map((point) => '<li>' + point + '</li>').join('');
-  typeUseText.textContent = data.use;
-}
-
-typeCards.forEach((card) => card.addEventListener('click', () => {
-  if (document.body.classList.contains('editing')) return;
-  selectType(card.dataset.type);
-}));
 
 const scenarios = [
   {
@@ -392,7 +334,7 @@ const scenarios = [
   {
     text: 'تحتاج مديرية الأرصاد إلى جهاز شديد القدرة يحسب ملايين القراءات بسرعة هائلة لمعرفة حالة الطقس.',
     answer: 'super',
-    explain: 'الحواسب الضخمة تُستخدم للحسابات والمحاكاات المعقدة بسرعة كبيرة.'
+    explain: 'الحواسب الضخمة تُستخدم للحسابات والمحاكاة المعقدة بسرعة كبيرة.'
   },
   {
     text: 'تريد عائلة جهازًا ثابتًا في المنزل مع شاشة كبيرة، وتريد لاحقًا ترقية بعض قطعه.',
@@ -443,84 +385,50 @@ missionChoices.addEventListener('click', (event) => {
 $('#missionNext').addEventListener('click', newScenario);
 
 const compData = {
-  motherboard: {
-    name: 'اللوحة الأم', en: 'Motherboard', icon: 'board', color: '#58cc02',
-    desc: 'القطعة الأساسية التي تُركَّب عليها جميع مكوّنات الحاسوب، وهي التي تربط بينها.',
-    points: ['تُركَّب عليها جميع المكوّنات', 'تربط بين المكوّنات']
-  },
-  cpu: {
-    name: 'المعالج', en: 'CPU', icon: 'cpu', color: '#1cb0f6',
-    desc: 'عقل الحاسوب الذي ينفّذ العمليات الحسابية والمنطقية وأوامر التحكم.',
-    points: ['العمليات الحسابية', 'العمليات المنطقية', 'أوامر التحكم']
-  },
-  ram: {
-    name: 'الذاكرة المؤقتة', en: 'RAM', icon: 'ram', color: '#ffc800',
-    desc: 'تحفظ البرامج المفتوحة حاليًا، وتفقد محتوياتها عند انقطاع التيار الكهربائي.',
-    points: ['تحفظ البرامج المفتوحة حاليًا', 'تفقد محتواها بانقطاع الكهرباء', 'قابلة للقراءة والكتابة']
-  },
-  rom: {
-    name: 'الذاكرة الدائمة', en: 'ROM', icon: 'rom', color: '#ce82ff',
-    desc: 'تحتوي معلومات بدء التشغيل، وهي قابلة للقراءة فقط وتحتفظ بمحتوياتها بعد إيقاف التشغيل.',
-    points: ['تحتوي معلومات بدء التشغيل', 'قابلة للقراءة فقط', 'تحتفظ بمحتوياتها بعد إيقاف التشغيل']
-  },
-  hdd: {
-    name: 'القرص الصلب', en: 'Hard Disk', icon: 'disk', color: '#58cc02',
-    desc: 'يخزّن الملفات والبرامج والبيانات، ويحتفظ بمحتوياته بعد إيقاف التشغيل.',
-    points: ['تخزين الملفات والبرامج والبيانات', 'يحتفظ بمحتوياته بعد إيقاف التشغيل']
-  },
-  gpu: {
-    name: 'بطاقة الشاشة', en: 'Graphics Card', icon: 'gpu', color: '#ff9600',
-    desc: 'تعالج الرسومات وتحدّد دقة الصورة المعروضة على الشاشة.',
-    points: ['معالجة الرسومات', 'تحديد دقة الصورة على الشاشة']
-  },
-  sound: {
-    name: 'بطاقة الصوت', en: 'Sound Card', icon: 'sound', color: '#ff4b4b',
-    desc: 'تعالج الصوت وتشغّله عبر السماعات.',
-    points: ['معالجة الصوت', 'تشغيل الصوت']
-  },
-  network: {
-    name: 'بطاقة الشبكة', en: 'Network Card', icon: 'network', color: '#1cb0f6',
-    desc: 'تربط الحاسوب بالشبكة والإنترنت.',
-    points: ['ربط الحاسوب بالشبكة', 'الاتصال بالإنترنت']
-  },
-  fan: {
-    name: 'مروحة التبريد', en: 'Cooling Fan', icon: 'fan', color: '#8a969b',
-    desc: 'تبرّد المعالج لمنع ارتفاع حرارته.',
-    points: ['تبريد المعالج', 'منع ارتفاع حرارته']
-  },
-  io: {
-    name: 'أجهزة الإدخال والإخراج', en: 'Input / Output', icon: 'io', color: '#58cc02',
-    desc: 'تُدخل البيانات إلى الحاسوب وتُخرج النتائج منه.',
-    points: ['إدخال البيانات: لوحة المفاتيح، الفأرة', 'إخراج النتائج: الشاشة، السماعات']
-  }
+  motherboard: { name: 'اللوحة الأم', en: 'Motherboard', icon: 'board', color: '#58cc02', desc: 'القطعة الأساسية التي تُركَّب عليها جميع المكوّنات، وهي التي تربط بينها.' },
+  cpu: { name: 'المعالج', en: 'CPU', icon: 'cpu', color: '#1cb0f6', desc: 'عقل الحاسوب الذي ينفّذ العمليات الحسابية والمنطقية وأوامر التحكم.' },
+  ram: { name: 'الذاكرة المؤقتة', en: 'RAM', icon: 'ram', color: '#ffc800', desc: 'تحفظ البرامج المفتوحة حاليًا، وتفقد محتواها عند انقطاع التيار الكهربائي.' },
+  rom: { name: 'الذاكرة الدائمة', en: 'ROM', icon: 'rom', color: '#ce82ff', desc: 'تحتوي معلومات بدء التشغيل، وهي قابلة للقراءة فقط وتحتفظ بمحتوياتها بعد الإيقاف.' },
+  hdd: { name: 'القرص الصلب', en: 'Hard Disk', icon: 'disk', color: '#58cc02', desc: 'يخزّن الملفات والبرامج والبيانات، ويحتفظ بمحتوياته بعد إيقاف التشغيل.' },
+  gpu: { name: 'بطاقة الشاشة', en: 'Graphics Card', icon: 'gpu', color: '#ff9600', desc: 'تعالج الرسومات وتحدّد دقة الصورة المعروضة على الشاشة.' },
+  sound: { name: 'بطاقة الصوت', en: 'Sound Card', icon: 'sound', color: '#ff4b4b', desc: 'تعالج الصوت وتشغّله عبر السماعات.' },
+  network: { name: 'بطاقة الشبكة', en: 'Network Card', icon: 'network', color: '#1cb0f6', desc: 'تربط الحاسوب بالشبكة والإنترنت.' },
+  fan: { name: 'مروحة التبريد', en: 'Cooling Fan', icon: 'fan', color: '#8a969b', desc: 'تبرّد المعالج لمنع ارتفاع حرارته.' },
+  io: { name: 'أجهزة الإدخال والإخراج', en: 'Input / Output', icon: 'io', color: '#58cc02', desc: 'تُدخل البيانات إلى الحاسوب وتُخرج النتائج منه.' }
 };
 
-const compIcon = $('#compIcon');
-const compIconUse = compIcon.querySelector('use');
-const compEn = $('#compEn');
-const compName = $('#compName');
-const compDesc = $('#compDesc');
-const compPoints = $('#compPoints');
-const hotspots = $$('.hotspot');
+function selectComp(slide, key) {
+  const data = compData[key];
+  if (!data) return;
+  const detail = $('.p-comp-detail', slide);
+  if (!detail) return;
+  $$('.hotspot', slide).forEach((spot) => spot.classList.toggle('is-on', spot.dataset.comp === key));
+  const icon = $('.p-comp-ico', detail);
+  const use = icon.querySelector('use');
+  use.setAttribute('href', '#i-' + data.icon);
+  icon.style.color = data.color;
+  icon.style.background = 'color-mix(in srgb, ' + data.color + ' 13%, #fff)';
+  $('.p-comp-en', detail).textContent = data.en;
+  $('.p-comp-name', detail).textContent = data.name;
+  $('.p-comp-desc', detail).textContent = data.desc;
+}
+
+$$('.p-comp-slide').forEach((slide) => {
+  const spots = $$('.hotspot', slide);
+  spots.forEach((spot) => {
+    spot.addEventListener('click', () => {
+      if (document.body.classList.contains('editing')) return;
+      selectComp(slide, spot.dataset.comp);
+    });
+  });
+  if (spots.length) selectComp(slide, spots[0].dataset.comp);
+});
+
+const challengeBoard = $('.p-board-challenge');
 const challengeBtn = $('#challengeBtn');
-const challengePanel = $('#challengePanel');
 const challengeProgress = $('#challengeProgress');
 const challengePrompt = $('#challengePrompt');
 const challengeFeedback = $('#challengeFeedback');
-
-function selectComp(key) {
-  const data = compData[key];
-  if (!data) return;
-  hotspots.forEach((spot) => spot.classList.toggle('is-on', spot.dataset.comp === key));
-  compIconUse.setAttribute('href', '#i-' + data.icon);
-  compIcon.style.color = data.color;
-  compIcon.style.background = 'color-mix(in srgb, ' + data.color + ' 13%, #fff)';
-  compEn.textContent = data.en;
-  compName.textContent = data.name;
-  compDesc.textContent = data.desc;
-  compPoints.innerHTML = data.points.map((point) => '<li>' + point + '</li>').join('');
-}
-
 const challenges = [
   { prompt: 'أين تُنفَّذ العمليات الحسابية والمنطقية؟', answer: 'cpu' },
   { prompt: 'أين تُركَّب جميع المكوّنات وتترابط؟', answer: 'motherboard' },
@@ -531,16 +439,18 @@ const challenges = [
 let challengeMode = false;
 let challengeStep = 0;
 let challengeHits = 0;
-let challengeDone = false;
 
 function renderChallenge() {
   if (challengeStep >= challenges.length) {
-    challengeDone = true;
+    challengeMode = false;
+    challengeBoard.classList.remove('challenge-mode');
     challengeProgress.textContent = 'مكتمل';
     challengePrompt.textContent = 'ممتاز! أجبت ' + challengeHits + ' من ' + challenges.length;
     challengeFeedback.className = 'feedback pop good';
     challengeFeedback.textContent = 'أصبحت تعرف وظائف المكونات!';
     challengeBtn.textContent = 'إعادة التحدي';
+    addXP(6, 'أتقنت مكونات الحاسوب!');
+    confetti(80);
     return;
   }
   challengeProgress.textContent = (challengeStep + 1) + ' / ' + challenges.length;
@@ -551,62 +461,54 @@ function renderChallenge() {
 
 function startChallenge() {
   challengeMode = true;
-  challengeDone = false;
   challengeStep = 0;
   challengeHits = 0;
-  challengePanel.hidden = false;
+  challengeBoard.classList.add('challenge-mode');
   challengeBtn.textContent = 'إنهاء التحدي';
   renderChallenge();
 }
 
 function stopChallenge() {
   challengeMode = false;
-  challengePanel.hidden = true;
-  challengeBtn.innerHTML = '<svg class="ico"><use href="#i-target"/></svg> وضع التحدي';
+  challengeBoard.classList.remove('challenge-mode');
+  challengeProgress.textContent = '1 / 5';
+  challengePrompt.textContent = 'اضغط «ابدأ التحدي» ثم اختر القطعة الصحيحة.';
+  challengeFeedback.className = 'feedback';
+  challengeFeedback.textContent = '';
+  challengeBtn.textContent = 'ابدأ التحدي';
 }
 
 challengeBtn.addEventListener('click', () => {
-  if (!challengeMode || challengeDone) startChallenge();
+  if (!challengeMode) startChallenge();
   else stopChallenge();
 });
 
-hotspots.forEach((spot) => {
-  spot.addEventListener('click', () => {
-    const key = spot.dataset.comp;
-    if (!challengeMode) {
-      selectComp(key);
-      return;
-    }
-    if (challengeDone) return;
-    const answer = challenges[challengeStep].answer;
-    if (key === answer) {
-      challengeHits++;
-      challengeStep++;
-      selectComp(key);
-      addXP(4);
-      spot.classList.add('correct');
-      setTimeout(() => spot.classList.remove('correct'), 750);
-      challengeFeedback.className = 'feedback pop good';
-      challengeFeedback.textContent = 'إجابة صحيحة!';
-      if (challengeStep >= challenges.length) {
-        renderChallenge();
-        addXP(6, 'أتقنت مكونات الحاسوب!');
-        confetti(80);
+if (challengeBoard) {
+  $$('.hotspot', challengeBoard).forEach((spot) => {
+    spot.addEventListener('click', () => {
+      if (!challengeMode || document.body.classList.contains('editing')) return;
+      const answer = challenges[challengeStep].answer;
+      if (spot.dataset.comp === answer) {
+        challengeHits++;
+        challengeStep++;
+        addXP(4);
+        spot.classList.add('correct');
+        setTimeout(() => spot.classList.remove('correct'), 750);
+        challengeFeedback.className = 'feedback pop good';
+        challengeFeedback.textContent = 'إجابة صحيحة!';
+        if (challengeStep >= challenges.length) renderChallenge();
+        else setTimeout(renderChallenge, 650);
       } else {
-        setTimeout(renderChallenge, 650);
+        spot.classList.add('wrong');
+        setTimeout(() => spot.classList.remove('wrong'), 500);
+        challengeFeedback.className = 'feedback pop bad';
+        challengeFeedback.textContent = 'ليست هذه القطعة… حاول مرة أخرى.';
       }
-    } else {
-      spot.classList.add('wrong');
-      setTimeout(() => spot.classList.remove('wrong'), 500);
-      challengeFeedback.className = 'feedback pop bad';
-      challengeFeedback.textContent = 'ليست هذه القطعة… حاول مرة أخرى.';
-    }
+    });
   });
-});
+}
 
-selectType('laptop');
 newScenario();
-selectComp('cpu');
 
 window.IT7 = {
   addXP,

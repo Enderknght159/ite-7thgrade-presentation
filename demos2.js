@@ -1,8 +1,9 @@
 (function () {
-  const { addXP, confetti, goTo } = window.IT7;
+  const { addXP, confetti } = window.IT7;
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
+  /* ---------------- طرق الانتقال ---------------- */
   const routeData = {
     internet: {
       title: 'عبر الشبكة والإنترنت',
@@ -54,8 +55,9 @@
   }
 
   routeNodes.forEach((node) => node.addEventListener('click', () => activateRoute(node.dataset.route)));
-  activateRoute('internet');
+  if (routeNodes.length) activateRoute('internet');
 
+  /* ---------------- دلائل الإصابة ---------------- */
   const symptomData = {
     slow: 'بطء شديد في عمل الحاسوب.',
     files: 'اختفاء ملفات أو مجلدات دون سبب.',
@@ -66,7 +68,7 @@
   };
   const symptomList = $('#symptomList');
   const symFound = $('#symFound');
-  const damageCard = $('#damageCard');
+  const symNext = $('#symNext');
   const pcHotspots = $$('.pc-hotspot');
   const foundSymptoms = new Set();
 
@@ -94,7 +96,7 @@
       updateSymptoms();
       addXP(2);
       if (foundSymptoms.size === Object.keys(symptomData).length) {
-        damageCard.hidden = false;
+        symNext.hidden = false;
         addXP(6, 'اكتشفت كل الدلائل!');
         confetti(80);
       }
@@ -104,15 +106,18 @@
   function resetSymptoms() {
     foundSymptoms.clear();
     pcHotspots.forEach((spot) => spot.classList.remove('found'));
-    damageCard.hidden = true;
+    symNext.hidden = true;
     renderSymptoms();
     updateSymptoms();
   }
 
-  $('#symReset').addEventListener('click', resetSymptoms);
-  renderSymptoms();
-  updateSymptoms();
+  if ($('#symReset')) {
+    $('#symReset').addEventListener('click', resetSymptoms);
+    renderSymptoms();
+    updateSymptoms();
+  }
 
+  /* ---------------- درع الحماية ---------------- */
   const protectCards = $$('.protect-card');
   const shieldCount = $('#shieldCount');
   const shieldMsg = $('#shieldMsg');
@@ -156,8 +161,9 @@
       updateShield();
     });
   });
-  updateShield();
+  if (protectCards.length) updateShield();
 
+  /* ---------------- الاختبار ---------------- */
   const questions = [
     {
       unit: 'الوحدة الأولى',
@@ -168,14 +174,14 @@
     },
     {
       unit: 'الوحدة الأولى',
-      q: 'في حاسوب سليم كل القطع متصلة وتعمل. إذا أزلنا اللوحة الأم، فماذا يحدث؟',
+      q: 'إذا أزلنا اللوحة الأم من الحاسوب، فماذا يحدث؟',
       options: ['يعمل المعالج وحده دون باقي القطع', 'تعمل الشاشة دون غيرها', 'تنقطع الصلة بين المكونات', 'يُحذف محتوى القرص الصلب'],
       correct: 2,
       explain: 'اللوحة الأم هي التي تربط بين جميع المكونات، فإزالتها تقطع الصلة بينها.'
     },
     {
       unit: 'الوحدة الأولى',
-      q: 'كتب أحمد واجبه على الحاسوب، ثم انقطعت الكهرباء فاختفى ما كتبه. وعندما عاد التيار ظهرت شاشة البداية كالمعتاد. أي استنتاج صحيح؟',
+      q: 'كتب أحمد واجبه ثم انقطعت الكهرباء فاختفى ما كتبه، وعندما عاد التيار ظهرت شاشة البداية كالمعتاد. أي استنتاج صحيح؟',
       options: ['الواجب وشاشة البداية في ذاكرة مؤقتة', 'الواجب في ذاكرة دائمة، وشاشة البداية في ذاكرة مؤقتة', 'الواجب وشاشة البداية في ذاكرة دائمة', 'الواجب في ذاكرة مؤقتة، وشاشة البداية في ذاكرة دائمة'],
       correct: 3,
       explain: 'الواجب كان في RAM فاختفى، وشاشة البداية تأتي من ROM التي تحتفظ بمحتوياتها.'
@@ -203,7 +209,7 @@
     },
     {
       unit: 'الوحدة الثانية',
-      q: 'في النظام الستة عشري تُستخدم الأرقام من 0 إلى 9 ثم الحروف من A إلى F. أي رمز لا يمكن استخدامه في هذا النظام؟',
+      q: 'أي رمز لا يمكن استخدامه في النظام الستة عشري؟',
       options: ['9', 'G', 'F', 'A'],
       correct: 1,
       explain: 'الحرف G يأتي بعد F، لذلك لا يُستخدم في النظام الستة عشري.'
@@ -345,10 +351,10 @@
       answered = false;
       renderQuestion();
     });
-    $('#quizReview').addEventListener('click', () => window.IT7.goToKey('recap'));
+    $('#quizReview').addEventListener('click', () => window.IT7.goToKey('recap1'));
   }
 
-  renderQuestion();
+  if (quizBody) renderQuestion();
 
   document.addEventListener('keydown', (event) => {
     if (window.IT7.currentKey !== 'quiz') return;
@@ -368,6 +374,6 @@
     if (finalXP) finalXP.textContent = window.IT7.xp + ' XP';
   }
   document.addEventListener('it7:slide', (event) => {
-    if (event.detail.index === 16) updateFinalXP();
+    if (event.detail.key === 'homework') updateFinalXP();
   });
 })();
