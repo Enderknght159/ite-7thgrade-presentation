@@ -531,3 +531,40 @@ function slideFromHash() {
 
 window.addEventListener('hashchange', () => goTo(slideFromHash()));
 goTo(slideFromHash());
+
+/* ---------- التنقل بالسحب على شاشات اللمس ---------- */
+(function initSwipeNavigation() {
+  const deck = $('#deck');
+  if (!deck || !('ontouchstart' in window)) return;
+
+  const IGNORE = 'input, textarea, select, .editor, .conv-table-wrap, .scrim, [data-no-swipe]';
+  const MIN_DISTANCE = 55;
+  let startX = 0;
+  let startY = 0;
+  let tracking = false;
+
+  deck.addEventListener('touchstart', (event) => {
+    tracking = false;
+    if (event.touches.length !== 1) return;
+    if (event.target.closest(IGNORE)) return;
+    if (editorOpen || document.body.classList.contains('editing')) return;
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+    tracking = true;
+  }, { passive: true });
+
+  deck.addEventListener('touchend', (event) => {
+    if (!tracking) return;
+    tracking = false;
+    const touch = event.changedTouches[0];
+    if (!touch) return;
+    const dx = touch.clientX - startX;
+    const dy = touch.clientY - startY;
+    if (Math.abs(dx) < MIN_DISTANCE) return;
+    if (Math.abs(dx) < Math.abs(dy) * 1.4) return;
+    if (dx < 0) goTo(current + 1);
+    else goTo(current - 1);
+  }, { passive: true });
+
+  deck.addEventListener('touchcancel', () => { tracking = false; }, { passive: true });
+})();

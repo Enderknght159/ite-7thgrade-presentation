@@ -1,0 +1,125 @@
+/* ==========================================================================
+   تحسينات الهواتف — ملف مستقل يُحمَّل بعد بقية الأنماط.
+   كل القواعد هنا داخل استعلامات وسائط للشاشات الصغيرة (أو لأجهزة اللمس)،
+   لذلك لا يتغيّر شكل العرض على شاشات الحاسوب نهائيًا.
+   ========================================================================== */
+
+/* ---------- هواتف: عرض 768px وأقل ---------- */
+@media (max-width:768px){
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  body{overscroll-behavior-x:none}
+
+  /* الشريط العلوي وشريط التنقل يحترمان الحواف الآمنة (نوتش / شريط الهوم) */
+  .topbar{padding-inline:max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-left))}
+  .toast{top:72px}
+  .deck-nav{bottom:calc(10px + env(safe-area-inset-bottom))}
+  .slide{padding-bottom:calc(98px + env(safe-area-inset-bottom))}
+
+  /* جدول التحويل: يصغر ليدخل كاملًا داخل الشاشة بدل أن يُقصّ */
+  .p-table .table-card{padding:14px 12px}
+  .p-table .table-tools{flex-wrap:wrap;gap:8px}
+  .p-table .table-tools .btn{font-size:12px;padding:8px 11px;min-height:40px}
+  .p-table .conv-table{font-size:14px}
+  .p-table .conv-table th{font-size:11.5px;padding:6px 3px;letter-spacing:0}
+  .p-table .conv-table td{padding:5px 3px}
+  .p-table .conv-table td.dec-cell{font-size:16px}
+  .p-table .conv-table td.bin-cell{font-size:14px;letter-spacing:.5px}
+
+  /* مشهد الأعطال: النافذة المنبثقة تبقى داخل الشاشة، والدوائر أسهل للمس */
+  .p-symptoms .pc-screen{aspect-ratio:4/3}
+  .p-symptoms .pc-popup{top:4%;left:4%;right:auto;width:56%;padding:8px 10px;font-size:12px;gap:6px;pointer-events:none}
+  .p-symptoms .pc-popup .ico{width:16px;height:16px}
+  .p-symptoms .pc-popup i{font-size:10px;padding:2px 7px}
+  .p-symptoms .pc-hotspot{width:40px;height:40px}
+  .p-symptoms .hs-errors{top:6%;left:68%}
+  .p-symptoms .hs-full{top:86%;left:37%}
+
+  /* مفاتيح البتّ: صفّان من أربعة بدل صفّ ضيق لا يُلمس بسهولة */
+  .p-switch-lab .switches{flex-wrap:wrap;gap:10px 6px}
+  .p-switch-lab .bit-switch{flex:0 0 calc(25% - 6px);max-width:none}
+  .p-switch-lab .switch-track{max-width:100%;height:44px}
+
+  /* أهداف لمس مريحة */
+  .preset,.p-converter .preset,.p-decimal-lab .preset{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+  .lab-actions .btn,.quiz-actions .btn,.p-actions .btn{min-height:46px}
+  .conv-input-wrap input{height:52px}
+
+  /* لا خطوط أصغر من 12px على الهاتف */
+  .mini-label,.q-unit,.q-num,.bit-weight,.digit-box small{font-size:12px}
+
+  /* لعبة الذاكرة: صناديق أقصر لتظهر الخيارات الثلاثة معًا */
+  .memory-bins{gap:10px}
+  .memory-bins .bin{min-height:0;padding:14px 16px;gap:8px;border-top-width:6px}
+  .memory-bins .bin-ico{width:44px;height:44px;border-radius:14px}
+  .memory-bins .bin-ico .ico{width:24px;height:24px}
+  .memory-bins .bin-head{gap:12px}
+  .memory-bins .bin-head strong{font-size:26px}
+  .memory-bins .bin-head small{font-size:14px}
+  .memory-bins .bin-hint{font-size:14px;padding:4px 10px}
+  .p-memory-card{padding:14px 18px;min-height:0}
+  .p-memory-foot{flex-wrap:wrap;gap:10px}
+
+  /* الشرائح الفاصلة: لا توسيط رأسي يقطع المحتوى */
+  .p-unit,.p-cover{min-height:auto}
+
+  /* شرائح أنواع الحواسيب: تصغير لوحة الأيقونة لتظهر مع العنوان والمزايا */
+  .p-type-hero{gap:14px}
+  .p-type-visual{min-height:0;height:clamp(140px,22vh,190px);border-radius:20px}
+  .p-type-visual .ico{width:clamp(62px,17vw,86px);height:clamp(62px,17vw,86px)}
+  .p-type-visual span{font-size:15px;margin-top:8px}
+  .p-type-copy h2{font-size:clamp(27px,7.8vw,36px)}
+  .p-facts{gap:9px;margin:14px 0}
+  .p-fact{font-size:17px;gap:10px}
+  .p-fact .ico{width:22px;height:22px}
+  .p-use{font-size:15px;padding:11px 13px;gap:9px;line-height:1.5}
+  .p-use .ico{width:20px;height:20px}
+  .p-type-grid .type-card{min-height:0;padding:14px 12px}
+  .p-type-grid .type-icon{width:46px;height:46px;border-radius:15px;margin-bottom:8px}
+  .p-type-grid .type-icon .ico{width:26px;height:26px}
+}
+
+/* ---------- هواتف صغيرة: عرض 420px وأقل ---------- */
+@media (max-width:420px){
+  .p-head h2{font-size:clamp(24px,7.6vw,32px)}
+  .p-recap-item{padding:12px 16px;gap:14px}
+  .p-recap-item p{font-size:18px}
+  .p-task{padding:12px 16px;gap:14px}
+  .p-task p{font-size:17px}
+}
+
+/* ---------- هواتف صغيرة جدًا: عرض 360px وأقل ---------- */
+@media (max-width:360px){
+  .p-challenge-bar{flex-wrap:wrap;gap:10px}
+  .p-challenge-bar p{flex:1 1 100%}
+  .p-challenge-bar .btn{flex:0 0 auto;margin-inline-start:auto}
+  .p-decimal-lab .digit-box{width:clamp(76px,23vw,92px)}
+  .p-decimal-lab .digit-box b{font-size:clamp(32px,11vw,44px)}
+  .p-decimal-lab .dec-digits{gap:8px}
+  .p-decimal-lab>*{min-width:0}
+  .p-decimal-lab .dec-expansion{font-size:clamp(13px,4.4vw,19px)}
+  .p-decimal-lab .preset{padding:8px 12px;font-size:16px}
+  .p-decimal-lab .stepper input{font-size:34px}
+  .p-decimal-lab .step-btn{width:48px;height:48px;font-size:26px}
+}
+
+/* ---------- أجهزة اللمس: إزالة تأثيرات التمرير بالماوس العالقة ---------- */
+@media (hover:none){
+  button,a,.road-stop,.type-card,.bin,.p-road,.hotspot,.pc-hotspot,.nav-dot{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+  .p-road:hover,.memory-bins .bin:hover,.type-card:hover,.road-stop:hover,.btn:hover,.icon-btn:hover,.nav-dot:hover{transform:none}
+  .conv-table tr:hover td{background:transparent}
+}
+
+/* ---------- الهاتف بالوضع الأفقي: ارتفاع قصير ---------- */
+@media (max-height:520px) and (max-width:1000px){
+  .topbar{height:48px}
+  .deck{top:48px}
+  .slide{padding:10px 16px calc(78px + env(safe-area-inset-bottom))}
+  .p-head{margin-bottom:10px}
+  .p-head h2{font-size:clamp(20px,4.4vw,30px)}
+  .deck-nav{bottom:6px;padding:4px 6px;gap:8px}
+  .nav-btn{padding:6px 10px}
+  .p-type-grid{grid-template-columns:1fr 1fr}
+  .p-unit{min-height:auto}
+  .p-symptoms .pc-popup{left:5%;width:44%;font-size:13px;padding:8px 10px}
+  .p-symptoms .hs-errors{top:8%;left:56%}
+}
